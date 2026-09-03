@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+
+import doseProgress from '../../assets/product/dose-progress.png';
+import medicineTypes from '../../assets/product/medicine-types.png';
+import pillyPlus from '../../assets/product/pilly-plus.png';
+import todayStates from '../../assets/product/today-states.png';
+---
+
+<section class="showcase" aria-labelledby="showcase-title" data-feature-showcase>
+  <div class="shell showcase-inner">
+    <header class="showcase-heading">
+      <p class="section-label">Inside Pilly</p>
+      <h2 id="showcase-title">Your whole routine.<br />One clear view.</h2>
+      <p>See what’s next, record what happened, and recognize every medicine quickly.</p>
+    </header>
+
+    <div class="feature-grid">
+      <article class="feature-card feature-today" data-feature-card>
+        <div class="feature-copy">
+          <p class="feature-number">01</p>
+          <h3>Today, sorted.</h3>
+          <p>Doses stay grouped by time, even on a busy schedule.</p>
+        </div>
+        <div class="screen-crop today-crop" aria-hidden="true">
+          <Image
+            src={todayStates}
+            alt=""
+            widths={[560, 840]}
+            sizes="(max-width: 760px) 92vw, 52vw"
+          />
+        </div>
+      </article>
+
+      <article class="feature-card feature-record" data-feature-card>
+        <div class="feature-copy">
+          <p class="feature-number">02</p>
+          <h3>Progress you can feel.</h3>
+          <p>Taken and skipped doses stay readable without taking over the day.</p>
+        </div>
+        <div class="screen-crop progress-crop" aria-hidden="true">
+          <Image
+            src={doseProgress}
+            alt=""
+            widths={[440, 660]}
+            sizes="(max-width: 760px) 92vw, 34vw"
+          />
+        </div>
+      </article>
+
+      <article class="feature-card feature-identity" data-feature-card>
+        <div class="feature-copy">
+          <p class="feature-number">03</p>
+          <h3>Looks like your medicine.</h3>
+          <p>Choose its form and color so it is easier to spot.</p>
+        </div>
+        <div class="screen-crop types-crop" aria-hidden="true">
+          <Image
+            src={medicineTypes}
+            alt=""
+            widths={[440, 660]}
+            sizes="(max-width: 760px) 92vw, 34vw"
+          />
+        </div>
+      </article>
+
+      <article class="feature-card feature-plus" data-feature-card>
+        <div class="feature-copy">
+          <p class="feature-number">04</p>
+          <h3>Local first. Plus when you want it.</h3>
+          <p>Tracking stays free. Pilly Plus adds private backup, recovery, and photos.</p>
+        </div>
+        <div class="screen-crop plus-crop" aria-hidden="true">
+          <Image src={pillyPlus} alt="" widths={[440, 660]} sizes="(max-width: 760px) 92vw, 34vw" />
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initLandingMotion } from '../../motion/landing-motion';
+
+  initLandingMotion();
+</script>

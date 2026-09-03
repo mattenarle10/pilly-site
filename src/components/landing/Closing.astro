@@ -1,0 +1,15 @@
+---
+import { Image } from 'astro:assets';
+
+import capsule from '../../assets/brand/capsule.png';
+import { site } from '../../config';
+---
+
+<section class="closing shell" aria-labelledby="closing-title">
+  <Image src={capsule} width={86} height={86} alt="" format="webp" aria-hidden="true" />
+  <h2 id="closing-title">Your day has enough going on.</h2>
+  <p>Pilly keeps the medicine part simple.</p>
+  <a class="button primary" href={`mailto:${site.supportEmail}?subject=Pilly%20early%20access`}>
+    Join early access
+  </a>
+</section>
