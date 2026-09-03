@@ -1,0 +1,49 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { site } from '../config';
+---
+
+<SiteLayout title="Support" description="Get help with Pilly medicine tracking, reminders, Pilly Plus, and account deletion.">
+  <section class="support shell">
+    <div class="support-intro">
+      <p class="eyebrow">Support</p>
+      <h1>How can we help?</h1>
+      <p>Tell us what happened and which iPhone and iOS version you’re using.</p>
+      <a class="button primary" href={`mailto:${site.supportEmail}?subject=Pilly%20support`}>
+        Email Pilly support
+      </a>
+      <p class="support-email">{site.supportEmail}</p>
+    </div>
+
+    <div class="support-grid">
+      <article>
+        <h2>Reminders</h2>
+        <p>
+          In iPhone Settings, open Notifications, choose Pilly, and confirm notifications are allowed.
+          Pilly schedules reminders on your device; a network connection is not required.
+        </p>
+      </article>
+      <article>
+        <h2>Pilly Plus</h2>
+        <p>
+          Open Profile, then Account to review your connected provider and backup state. Use Restore
+          Purchases from the Pilly Plus screen if an active purchase is not recognized.
+        </p>
+      </article>
+      <article>
+        <h2>Delete an account</h2>
+        <p>
+          Open Profile, Account, then Delete cloud account. This removes synchronized records and
+          private images. App Store subscriptions must be managed separately in Apple Settings.
+        </p>
+      </article>
+      <article>
+        <h2>Medical questions</h2>
+        <p>
+          Pilly cannot advise you about a medicine, dose, side effect, interaction, or missed dose.
+          Contact a qualified healthcare professional for medical guidance.
+        </p>
+      </article>
+    </div>
+  </section>
+</SiteLayout>
