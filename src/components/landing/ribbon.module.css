@@ -37,8 +37,8 @@
   border-radius: 30px;
   background: rgba(255, 255, 255, 0.84);
   transition:
-    transform 180ms ease,
-    border-color 180ms ease;
+    transform var(--motion-base) var(--ease-out),
+    border-color var(--motion-fast) ease;
 }
 
 .item:nth-child(2),
@@ -51,14 +51,10 @@
   background: var(--lavender-soft);
 }
 
-.item:hover {
-  border-color: rgba(140, 64, 92, 0.3);
-  transform: translateY(-4px);
-}
-
 .medicine {
   width: 96px;
   height: 96px;
+  transition: transform var(--motion-base) var(--ease-out);
 }
 
 .label {
@@ -78,6 +74,22 @@
   border-radius: 50%;
   background: var(--success-soft);
   color: var(--success);
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    border-color: rgba(140, 64, 92, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .item:hover .medicine {
+    transform: translateY(-4px) rotate(-2deg) scale(1.025);
+  }
+
+  .item:hover .complete {
+    transform: scale(1.08);
+  }
 }
 
 @media (max-width: 680px) {
@@ -97,7 +109,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .item {
+  .item,
+  .medicine,
+  .complete {
     transition: none;
   }
 }
