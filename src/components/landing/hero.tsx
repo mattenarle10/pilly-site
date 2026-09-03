@@ -56,13 +56,13 @@ export function Hero() {
           </span>
         </h1>
         <p data-hero-copy>Private medicine reminders and tracking for iPhone.</p>
-        <a className={styles.action} href={href} data-hero-copy>
-          Join early access
-          <ArrowRight aria-hidden="true" size={18} strokeWidth={2} />
-        </a>
-        <span className={styles.note} data-hero-copy>
-          No account required.
-        </span>
+        <div className={styles.ctaGroup} data-hero-copy>
+          <a className={styles.action} href={href}>
+            Join early access
+            <ArrowRight aria-hidden="true" size={18} strokeWidth={2} />
+          </a>
+          <span className={styles.note}>No account required.</span>
+        </div>
       </div>
       <Ribbon />
     </section>

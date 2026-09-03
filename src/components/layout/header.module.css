@@ -2,6 +2,7 @@
   position: relative;
   z-index: 10;
   width: var(--shell);
+  height: var(--header-height);
   margin-inline: auto;
   padding-block: 22px;
 }
@@ -29,6 +30,11 @@
 
 .brand img {
   border-radius: 11px;
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+.brand:hover img {
+  transform: rotate(-4deg) scale(1.04);
 }
 
 .action {
@@ -42,17 +48,31 @@
   font-weight: 550;
   box-shadow: 0 8px 24px rgba(43, 35, 39, 0.06);
   transition:
-    transform 160ms ease,
-    border-color 160ms ease;
+    transform var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease;
+}
+
+.action svg {
+  transition: transform var(--motion-base) var(--ease-out);
 }
 
 .action:hover {
   border-color: rgba(140, 64, 92, 0.38);
+  background: var(--surface);
   transform: translateY(-1px);
 }
 
+.action:hover svg {
+  transform: translate(2px, -2px);
+}
+
 .action:active {
-  transform: scale(0.985);
+  transform: translateY(0) scale(0.975);
+}
+
+.action:active svg {
+  transform: translate(1px, -1px);
 }
 
 @media (max-width: 520px) {

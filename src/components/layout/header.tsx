@@ -10,7 +10,7 @@ export function Header() {
   const href = `mailto:${site.supportEmail}?subject=Pilly%20early%20access`;
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} data-journey-header>
       <div className={styles.inner}>
         <Link className={styles.brand} href="/" aria-label="Pilly home">
           <Image src="/app-icon.png" width={38} height={38} alt="" loading="eager" />

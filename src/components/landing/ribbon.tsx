@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Check } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import { Medicine } from '@/graphics';
 import type { MedicineForm } from '@/graphics';
@@ -29,53 +29,6 @@ const items: ReadonlyArray<{
 export function Ribbon() {
   const root = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
-  const scrollTarget = useRef(0);
-
-  useEffect(() => {
-    const node = viewport.current;
-    if (!node) return;
-    scrollTarget.current = node.scrollLeft;
-
-    const syncTarget = () => {
-      if (!gsap.isTweening(node)) scrollTarget.current = node.scrollLeft;
-    };
-
-    const handleWheel = (event: WheelEvent) => {
-      const bounds = node.getBoundingClientRect();
-      const isVisible = bounds.top < window.innerHeight && bounds.bottom > 0;
-      if (!isVisible) return;
-
-      const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-      const end = node.scrollWidth - node.clientWidth;
-      const canAdvance = delta > 0 && node.scrollLeft < end - 1;
-      const canReturn = delta < 0 && node.scrollLeft > 1;
-
-      if (!canAdvance && !canReturn) return;
-
-      event.preventDefault();
-      scrollTarget.current = Math.min(end, Math.max(0, scrollTarget.current + delta));
-
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        node.scrollLeft = scrollTarget.current;
-        return;
-      }
-
-      gsap.to(node, {
-        scrollLeft: scrollTarget.current,
-        duration: 0.34,
-        ease: motion.easeOut,
-        overwrite: true,
-      });
-    };
-
-    node.addEventListener('scroll', syncTarget, { passive: true });
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      gsap.killTweensOf(node);
-      node.removeEventListener('scroll', syncTarget);
-      window.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
 
   useGSAP(
     () => {

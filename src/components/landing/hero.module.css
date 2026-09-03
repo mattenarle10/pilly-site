@@ -1,6 +1,7 @@
 .hero {
   display: grid;
-  min-height: calc(100svh - 86px);
+  height: 100%;
+  min-height: 100%;
   align-content: center;
   overflow: hidden;
   padding-block: clamp(54px, 8vh, 92px) 54px;
@@ -57,8 +58,18 @@
   font-weight: 600;
   text-decoration: none;
   transition:
-    transform 160ms ease,
-    background-color 160ms ease;
+    transform var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) ease;
+}
+
+.action svg {
+  transition: transform var(--motion-base) var(--ease-out);
+}
+
+.ctaGroup {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
 }
 
 .action:hover {
@@ -66,19 +77,27 @@
   transform: translateY(-1px);
 }
 
+.action:hover svg {
+  transform: translateX(4px);
+}
+
 .action:active {
-  transform: scale(0.985);
+  transform: translateY(0) scale(0.975);
+}
+
+.action:active svg {
+  transform: translateX(2px);
 }
 
 .note {
-  margin-top: 13px;
   color: var(--text-secondary);
   font-size: 0.82rem;
+  line-height: 1.35;
 }
 
 @media (max-width: 680px) {
   .hero {
-    min-height: calc(100svh - 84px);
+    min-height: 100%;
     align-content: start;
     padding-top: 64px;
   }

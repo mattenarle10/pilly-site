@@ -16,6 +16,10 @@
   --success: #356a4f;
   --success-soft: #e3f2ea;
   --focus: #766eb3;
+  --header-height: 88px;
+  --motion-fast: 140ms;
+  --motion-base: 220ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --shell: min(1180px, calc(100% - 40px));
   --font:
     system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
@@ -34,7 +38,9 @@ html {
 }
 
 body {
+  height: 100svh;
   margin: 0;
+  overflow: hidden;
   background: var(--background);
   -webkit-font-smoothing: antialiased;
 }

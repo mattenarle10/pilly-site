@@ -1,0 +1,23 @@
+.deck {
+  display: flex;
+  width: 100%;
+  height: 100svh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior: none;
+  touch-action: pan-x;
+  background: var(--background);
+}
+
+.deck::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  flex: 0 0 100%;
+  overflow: hidden;
+}
