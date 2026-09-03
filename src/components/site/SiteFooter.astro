@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+
+import appIcon from '../../assets/brand/app-icon.png';
+import { site } from '../../config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-inner">
+    <a class="brand footer-brand" href="/" aria-label={`${site.name} home`}>
+      <Image src={appIcon} width={36} height={36} densities={[1.5, 2]} alt="" />
+      <span>{site.name}</span>
+    </a>
+    <nav aria-label="Legal and support">
+      <a href={`mailto:${site.supportEmail}?subject=Pilly%20early%20access`}>Early access</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/terms/">Terms</a>
+      <a href="/support/">Support</a>
+    </nav>
+    <p class="copyright">© {year} Matthew Enarle</p>
+  </div>
+</footer>

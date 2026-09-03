@@ -8,11 +8,20 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "verify": "bun run check && bun run build"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:e2e": "playwright test",
+    "verify": "bun run format:check && bun run check && bun run build && bun run test:e2e"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@playwright/test": "1.55.1",
     "astro": "7.2.10",
+    "prettier": "3.9.6",
+    "prettier-plugin-astro": "0.14.1",
     "typescript": "6.0.3"
+  },
+  "dependencies": {
+    "gsap": "3.15.0"
   }
 }

@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+
+import appIcon from '../../assets/brand/app-icon.png';
+import { site } from '../../config';
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label={`${site.name} home`}>
+      <Image src={appIcon} width={42} height={42} densities={[1.5, 2]} alt="" />
+      <span>{site.name}</span>
+    </a>
+    <p class="header-note">Medicine tracking, made calmer.</p>
+    <a
+      class="button header-cta"
+      href={`mailto:${site.supportEmail}?subject=Pilly%20early%20access`}
+    >
+      Join early access
+    </a>
+  </div>
+</header>

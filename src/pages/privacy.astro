@@ -3,7 +3,10 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 import { site } from '../config';
 ---
 
-<SiteLayout title="Privacy Policy" description="How Pilly handles local medicine data, optional Pilly Plus accounts, purchases, and private photos.">
+<SiteLayout
+  title="Privacy Policy"
+  description="How Pilly handles local medicine data, optional Pilly Plus accounts, purchases, and private photos."
+>
   <article class="legal shell">
     <header class="legal-heading">
       <p class="eyebrow">Legal</p>
@@ -15,7 +18,8 @@ import { site } from '../config';
       <strong>The short version</strong>
       <p>
         Pilly works without an account. Medicine tracking stays on your device unless you sign in to
-        Pilly Plus and explicitly turn on private backup. We do not sell your data or use it for ads.
+        Pilly Plus and explicitly turn on private backup. We do not sell your data or use it for
+        ads.
       </p>
     </div>
 
@@ -24,24 +28,25 @@ import { site } from '../config';
       <p>
         Pilly stores the information you enter—such as medicine names, schedules, dose records,
         supply estimates, appearance choices, profile details, and app settings—in local storage on
-        your device. Local reminders are scheduled through the operating system. Pilly’s notification
-        copy is designed not to reveal medicine names on the lock screen.
+        your device. Local reminders are scheduled through the operating system. Pilly’s
+        notification copy is designed not to reveal medicine names on the lock screen.
       </p>
     </section>
 
     <section>
       <h2>Optional Pilly Plus account and backup</h2>
       <p>
-        If you choose Pilly Plus, Pilly uses Amazon Cognito to connect an Apple or Google account. We
-        receive a stable account identifier and may receive your email address, relay email address,
-        and display name from the provider. We use this information only to authenticate you,
-        identify your Pilly account, provide support, and operate the features you request.
+        If you choose Pilly Plus, Pilly uses Amazon Cognito to connect an Apple or Google account.
+        We receive a stable account identifier and may receive your email address, relay email
+        address, and display name from the provider. We use this information only to authenticate
+        you, identify your Pilly account, provide support, and operate the features you request.
       </p>
       <p>
-        Signing in alone does not upload your medicine data. If you explicitly enable private backup,
-        Pilly synchronizes the medicine records needed for backup and recovery, including medicines,
-        schedules, dose and supply history, and intentionally account-scoped profile data. Optional
-        medicine photos and your optional account avatar are stored privately in Amazon S3.
+        Signing in alone does not upload your medicine data. If you explicitly enable private
+        backup, Pilly synchronizes the medicine records needed for backup and recovery, including
+        medicines, schedules, dose and supply history, and intentionally account-scoped profile
+        data. Optional medicine photos and your optional account avatar are stored privately in
+        Amazon S3.
       </p>
     </section>
 
@@ -51,8 +56,8 @@ import { site } from '../config';
         When you continue with Google, Pilly requests only basic OpenID identity information: your
         Google account identifier, email address, and profile information. Pilly uses this data to
         create and secure your optional Pilly Plus account. Pilly does not access Google Drive,
-        contacts, calendars, health data, or other Google services, and does not use Google user data
-        for advertising.
+        contacts, calendars, health data, or other Google services, and does not use Google user
+        data for advertising.
       </p>
     </section>
 
@@ -70,8 +75,13 @@ import { site } from '../config';
       <h2>Service providers</h2>
       <p>Pilly uses a small set of providers to deliver the features you choose:</p>
       <ul>
-        <li>Amazon Web Services for optional account authentication, private backup, and photo storage;</li>
-        <li>Apple for Sign in with Apple, App Store purchases, notifications, and platform services;</li>
+        <li>
+          Amazon Web Services for optional account authentication, private backup, and photo
+          storage;
+        </li>
+        <li>
+          Apple for Sign in with Apple, App Store purchases, notifications, and platform services;
+        </li>
         <li>Google for optional Google sign-in; and</li>
         <li>RevenueCat for subscription status and purchase lifecycle management.</li>
       </ul>
@@ -84,29 +94,30 @@ import { site } from '../config';
     <section>
       <h2>Analytics, advertising, and cookies</h2>
       <p>
-        Pilly does not include third-party advertising or behavioral analytics. This website does not
-        use analytics cookies, advertising cookies, account sign-in, or tracking pixels.
+        Pilly does not include third-party advertising or behavioral analytics. This website does
+        not use analytics cookies, advertising cookies, account sign-in, or tracking pixels.
       </p>
     </section>
 
     <section>
       <h2>Your choices and deletion</h2>
       <p>
-        You can use the free tracker without creating an account. You can turn private backup on only
-        when you choose it, remove individual photos, sign out, export a readable copy of local data,
-        or delete your cloud account from within Pilly. Cloud account deletion removes synchronized
-        account records and private images. Local information remains under your device controls
-        until you delete it or remove the app.
+        You can use the free tracker without creating an account. You can turn private backup on
+        only when you choose it, remove individual photos, sign out, export a readable copy of local
+        data, or delete your cloud account from within Pilly. Cloud account deletion removes
+        synchronized account records and private images. Local information remains under your device
+        controls until you delete it or remove the app.
       </p>
     </section>
 
     <section>
       <h2>Security and retention</h2>
       <p>
-        Pilly uses authenticated, owner-scoped access for cloud records and private images. No system
-        can guarantee absolute security. We retain optional cloud information while your Pilly Plus
-        account exists and as reasonably necessary to provide the service, resolve security or
-        support issues, and meet legal obligations. Deletion requests are processed through the app.
+        Pilly uses authenticated, owner-scoped access for cloud records and private images. No
+        system can guarantee absolute security. We retain optional cloud information while your
+        Pilly Plus account exists and as reasonably necessary to provide the service, resolve
+        security or support issues, and meet legal obligations. Deletion requests are processed
+        through the app.
       </p>
     </section>
 
@@ -122,8 +133,8 @@ import { site } from '../config';
     <section>
       <h2>Changes and contact</h2>
       <p>
-        We may update this policy as Pilly changes. The effective date above will identify the latest
-        version. Questions or privacy requests can be sent to
+        We may update this policy as Pilly changes. The effective date above will identify the
+        latest version. Questions or privacy requests can be sent to
         <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a>.
       </p>
     </section>

@@ -1,0 +1,20 @@
+:root {
+  color-scheme: light;
+  --background: #fffaf8;
+  --surface: #ffffff;
+  --surface-muted: #f4f1ed;
+  --text: #2b2327;
+  --muted: #70666b;
+  --border: #ded9d6;
+  --brand: #91415f;
+  --brand-strong: #733149;
+  --brand-soft: #f3cad7;
+  --success: #356a4f;
+  --success-soft: #e2f1e9;
+  --focus: #766eb3;
+  --shadow-product: 0 32px 90px rgba(43, 35, 39, 0.13);
+  --shell: min(1120px, calc(100% - 40px));
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  --font-rounded: ui-rounded, 'SF Pro Rounded', -apple-system, BlinkMacSystemFont, sans-serif;
+}
