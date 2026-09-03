@@ -1,0 +1,81 @@
+:root {
+  color-scheme: light;
+  --background: #fff9f7;
+  --surface: #ffffff;
+  --surface-subtle: #f3f1eb;
+  --text: #2b2327;
+  --text-secondary: #746a6f;
+  --border: #dddcd5;
+  --brand: #8c405c;
+  --brand-strong: #713149;
+  --brand-soft: #f3ccd7;
+  --peach: #f2c6ad;
+  --peach-soft: #fbe9de;
+  --lavender: #cdc8e8;
+  --lavender-soft: #eceaf7;
+  --success: #356a4f;
+  --success-soft: #e3f2ea;
+  --focus: #766eb3;
+  --shell: min(1180px, calc(100% - 40px));
+  --font:
+    system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font);
+  font-synthesis: none;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  border-radius: 10px;
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--brand-soft);
+  color: var(--text);
+}
+
+@media (max-width: 680px) {
+  :root {
+    --shell: min(100% - 28px, 1180px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

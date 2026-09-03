@@ -2,17 +2,35 @@
   "name": "pilly-site",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check",
-    "verify": "bun run check && bun run build"
+    "dev": "next dev",
+    "build": "next build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run build && bun run test:e2e"
+  },
+  "dependencies": {
+    "@gsap/react": "2.1.2",
+    "gsap": "3.15.0",
+    "lucide-react": "1.40.0",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
-    "astro": "7.2.10",
+    "@playwright/test": "1.62.1",
+    "@types/node": "24.10.13",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.4",
+    "prettier": "3.9.6",
     "typescript": "6.0.3"
-  }
+  },
+  "trustedDependencies": [
+    "unrs-resolver"
+  ]
 }

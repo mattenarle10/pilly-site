@@ -1,13 +1,10 @@
 # Pilly site
 
-The public home, privacy, terms, and support pages for Pilly.
+Static Pilly marketing pages built with Next.js, TypeScript, CSS Modules, and restrained GSAP motion.
 
 ## Commands
 
-```sh
-bun install
-bun run dev
-bun run verify
-```
+- `bun run dev` starts the local site.
+- `bun run verify` runs formatting, linting, TypeScript, the static export, and browser checks.
 
-The site is fully static. Production hosting is managed separately in the private `pilly-infra` repository.
+The landing page is developed one reviewed screen at a time. The current checkpoint contains only the header and hero.
