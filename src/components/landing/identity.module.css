@@ -39,41 +39,6 @@
   line-height: 1.5;
 }
 
-.action {
-  display: inline-flex;
-  min-height: 50px;
-  align-items: center;
-  gap: 9px;
-  margin-top: 28px;
-  padding-inline: 22px;
-  border-radius: 999px;
-  background: var(--brand);
-  color: var(--surface);
-  font-size: 0.92rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    transform var(--motion-fast) var(--ease-out),
-    background-color var(--motion-fast) ease;
-}
-
-.action svg {
-  transition: transform var(--motion-base) var(--ease-out);
-}
-
-.action:hover {
-  background: var(--brand-strong);
-  transform: translateY(-1px);
-}
-
-.action:hover svg {
-  transform: translateX(4px);
-}
-
-.action:active {
-  transform: scale(0.975);
-}
-
 .plusNote {
   display: inline-flex;
   min-height: 44px;
@@ -83,47 +48,6 @@
   color: var(--brand-strong);
   font-size: 0.88rem;
   font-weight: 550;
-}
-
-.endLinks {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  gap: 20px;
-  margin-top: 10px;
-  color: var(--text-secondary);
-  font-size: 0.78rem;
-}
-
-.endLinks a {
-  position: relative;
-  padding-block: 10px;
-  text-decoration: none;
-  transition: color var(--motion-fast) ease;
-}
-
-.endLinks a::after {
-  position: absolute;
-  right: 0;
-  bottom: 7px;
-  left: 0;
-  height: 1px;
-  background: currentcolor;
-  content: '';
-  opacity: 0;
-  transform: scaleX(0.55);
-  transition:
-    opacity var(--motion-fast) ease,
-    transform var(--motion-base) var(--ease-out);
-}
-
-.endLinks a:hover {
-  color: var(--brand-strong);
-}
-
-.endLinks a:hover::after {
-  opacity: 0.55;
-  transform: scaleX(1);
 }
 
 .studio {
@@ -300,10 +224,6 @@
     justify-content: center;
   }
 
-  .endLinks {
-    justify-content: center;
-  }
-
   .studio {
     width: min(100%, 620px);
     grid-row: 2;
@@ -332,19 +252,8 @@
     font-size: 0.74rem;
   }
 
-  .endLinks {
-    min-height: 36px;
-    margin-top: 0;
-  }
-
   .inner {
     gap: 10px;
-  }
-
-  .action {
-    min-height: 44px;
-    margin-top: 10px;
-    padding-inline: 20px;
   }
 
   .studio {
@@ -403,14 +312,7 @@
   .formOption,
   .palette,
   .palette::after,
-  .studio,
-  .action,
-  .action svg {
-    transition: none;
-  }
-
-  .endLinks a,
-  .endLinks a::after {
+  .studio {
     transition: none;
   }
 }

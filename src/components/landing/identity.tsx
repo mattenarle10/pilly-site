@@ -1,10 +1,8 @@
 'use client';
 
-import { ArrowRight, Camera } from 'lucide-react';
-import Link from 'next/link';
+import { Camera } from 'lucide-react';
 import { useState } from 'react';
 
-import { site } from '@/config';
 import { Medicine } from '@/graphics';
 import type { MedicineForm } from '@/graphics';
 
@@ -24,7 +22,6 @@ const palettes = [
 ] as const;
 
 export function Identity() {
-  const href = `mailto:${site.supportEmail}?subject=Pilly%20early%20access`;
   const [form, setForm] = useState<MedicineForm>('capsule');
   const [paletteIndex, setPaletteIndex] = useState(0);
   const palette = palettes[paletteIndex];
@@ -36,19 +33,10 @@ export function Identity() {
         <div className={styles.copy}>
           <h2 id="identity-title">Recognize it instantly.</h2>
           <p>Choose the form and colors you know.</p>
-          <a className={styles.action} href={href}>
-            Join early access
-            <ArrowRight aria-hidden="true" size={18} strokeWidth={2} />
-          </a>
           <span className={styles.plusNote}>
             <Camera aria-hidden="true" size={17} strokeWidth={1.9} />
             Private photos with Pilly Plus
           </span>
-          <nav className={styles.endLinks} aria-label="Legal and support">
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/support">Support</Link>
-          </nav>
         </div>
 
         <div className={styles.studio}>

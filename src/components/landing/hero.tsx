@@ -2,17 +2,15 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ArrowRight } from 'lucide-react';
 import { useRef } from 'react';
 
-import { site } from '@/config';
+import { EarlyAccessLink } from '@/components/actions';
 import { motion } from '@/motion';
 
 import { Ribbon } from './ribbon';
 import styles from './hero.module.css';
 
 export function Hero() {
-  const href = `mailto:${site.supportEmail}?subject=Pilly%20early%20access`;
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -57,10 +55,7 @@ export function Hero() {
         </h1>
         <p data-hero-copy>Private medicine reminders and tracking for iPhone.</p>
         <div className={styles.ctaGroup} data-hero-copy>
-          <a className={styles.action} href={href}>
-            Join early access
-            <ArrowRight aria-hidden="true" size={18} strokeWidth={2} />
-          </a>
+          <EarlyAccessLink className={styles.action} />
           <span className={styles.note}>No account required.</span>
         </div>
       </div>
