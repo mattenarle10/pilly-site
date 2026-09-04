@@ -10,7 +10,8 @@ test('renders the accepted hero checkpoint', async ({ page }) => {
   await expect(
     page.getByLabel('Medicine forms', { exact: true }).getByText('Tablet'),
   ).toBeVisible();
-  await expect(page.locator('main section')).toHaveCount(3);
+  await expect(page.locator('main section')).toHaveCount(4);
+  await expect(page.getByRole('heading', { name: 'Ready when you are.' })).toBeVisible();
 });
 
 test('medicine ribbon remains a native horizontal strip', async ({ page }) => {
@@ -32,4 +33,5 @@ test('remains complete with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await expect(page.getByText('Inhaler')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Ready when you are.' })).toBeVisible();
 });

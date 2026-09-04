@@ -75,8 +75,9 @@ export function Ribbon() {
           {items.map((item) => (
             <li className={styles.item} key={item.form} data-medicine>
               {item.complete && (
-                <span className={styles.complete} aria-label="Recorded">
+                <span className={styles.complete}>
                   <Check aria-hidden="true" size={15} strokeWidth={2.4} />
+                  <span className={styles.srOnly}>Recorded</span>
                 </span>
               )}
               <Medicine

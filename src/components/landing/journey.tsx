@@ -122,6 +122,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
     <div
       className={styles.journey}
       ref={viewport}
+      role="region"
       tabIndex={isHorizontal ? 0 : undefined}
       aria-label="Pilly product tour"
       aria-describedby={isHorizontal ? instructionsId : undefined}

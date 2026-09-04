@@ -107,6 +107,10 @@
   color: var(--brand-strong);
 }
 
+.due .more {
+  color: var(--brand-strong);
+}
+
 .progressCopy {
   display: grid;
   justify-items: end;
