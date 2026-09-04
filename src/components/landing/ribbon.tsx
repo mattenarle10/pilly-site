@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Check } from 'lucide-react';
-import { useRef } from 'react';
+import { useId, useRef } from 'react';
 
 import { Medicine } from '@/graphics';
 import type { MedicineForm } from '@/graphics';
@@ -29,6 +29,7 @@ const items: ReadonlyArray<{
 export function Ribbon() {
   const root = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
+  const instructionsId = useId();
 
   useGSAP(
     () => {
@@ -59,10 +60,20 @@ export function Ribbon() {
 
   return (
     <div className={styles.root} ref={root}>
-      <div className={styles.viewport} ref={viewport} tabIndex={0} aria-label="Medicine forms">
-        <div className={styles.track}>
+      <div
+        className={styles.viewport}
+        ref={viewport}
+        tabIndex={0}
+        role="region"
+        aria-label="Medicine forms"
+        aria-describedby={instructionsId}
+      >
+        <span className={styles.srOnly} id={instructionsId}>
+          Scroll horizontally to explore six medicine forms.
+        </span>
+        <ul className={styles.track}>
           {items.map((item) => (
-            <article className={styles.item} key={item.form} data-medicine>
+            <li className={styles.item} key={item.form} data-medicine>
               {item.complete && (
                 <span className={styles.complete} aria-label="Recorded">
                   <Check aria-hidden="true" size={15} strokeWidth={2.4} />
@@ -75,9 +86,9 @@ export function Ribbon() {
                 secondaryColor={item.secondaryColor}
               />
               <span className={styles.label}>{item.label}</span>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

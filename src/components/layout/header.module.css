@@ -75,10 +75,8 @@
   transform: translate(1px, -1px);
 }
 
-@media (max-width: 520px) {
+@media (max-width: 680px) {
   .action {
-    min-height: 42px;
-    padding-inline: 15px;
-    font-size: 0.8rem;
+    display: none;
   }
 }
