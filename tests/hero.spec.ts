@@ -7,8 +7,10 @@ test('renders the accepted hero checkpoint', async ({ page }) => {
   await expect(page.getByRole('link', { name: /join early access/i }).first()).toBeVisible();
   await expect(page.getByLabel('Medicine forms', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /medicines/i })).toHaveCount(0);
-  await expect(page.getByText('Tablet')).toBeVisible();
-  await expect(page.locator('main section')).toHaveCount(2);
+  await expect(
+    page.getByLabel('Medicine forms', { exact: true }).getByText('Tablet'),
+  ).toBeVisible();
+  await expect(page.locator('main section')).toHaveCount(3);
 });
 
 test('medicine ribbon remains a native horizontal strip', async ({ page }) => {

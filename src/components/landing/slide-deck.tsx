@@ -6,7 +6,14 @@ import type { ReactNode } from 'react';
 
 import styles from './slide-deck.module.css';
 
-export function SlideDeck({ children }: { children: ReactNode }) {
+const defaultBackgroundTokens = ['--background', '--surface'] as const;
+
+type Props = {
+  children: ReactNode;
+  backgroundTokens?: ReadonlyArray<string>;
+};
+
+export function SlideDeck({ children, backgroundTokens = defaultBackgroundTokens }: Props) {
   const viewport = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,19 +22,21 @@ export function SlideDeck({ children }: { children: ReactNode }) {
 
     const journeyHeader = node.querySelector<HTMLElement>('[data-journey-header]');
     const rootStyles = getComputedStyle(document.documentElement);
-    const firstBackground = rootStyles.getPropertyValue('--background').trim();
-    const nextBackground = rootStyles.getPropertyValue('--surface').trim();
+    const backgrounds = backgroundTokens.map((token) => rootStyles.getPropertyValue(token).trim());
     const maxScroll = () => Math.max(0, node.scrollWidth - node.clientWidth);
     const renderJourney = () => {
-      const progress = maxScroll() ? node.scrollLeft / maxScroll() : 0;
+      const sceneProgress = node.clientWidth ? node.scrollLeft / node.clientWidth : 0;
+      const currentScene = Math.min(Math.floor(sceneProgress), backgrounds.length - 1);
+      const nextScene = Math.min(currentScene + 1, backgrounds.length - 1);
+      const localProgress = Math.min(1, Math.max(0, sceneProgress - currentScene));
       node.style.backgroundColor = gsap.utils.interpolate(
-        firstBackground,
-        nextBackground,
-        progress,
+        backgrounds[currentScene],
+        backgrounds[nextScene],
+        localProgress,
       );
       if (journeyHeader) {
         gsap.set(journeyHeader, {
-          autoAlpha: gsap.utils.clamp(0, 1, 1 - progress * 2.2),
+          autoAlpha: gsap.utils.clamp(0, 1, 1 - sceneProgress * 2.2),
         });
       }
     };
@@ -79,7 +88,7 @@ export function SlideDeck({ children }: { children: ReactNode }) {
       node.removeEventListener('keydown', handleKey);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [backgroundTokens]);
 
   return (
     <div className={styles.deck} ref={viewport} tabIndex={0} aria-label="Pilly product tour">
