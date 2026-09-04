@@ -9,6 +9,9 @@ import styles from './journey.module.css';
 const defaultBackgroundTokens = ['--background', '--surface'] as const;
 const horizontalJourneyQuery =
   '(min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
+
+type JourneyMode = 'static' | 'vertical' | 'horizontal';
 
 type Props = {
   children: ReactNode;
@@ -18,7 +21,8 @@ type Props = {
 export function Journey({ children, backgroundTokens = defaultBackgroundTokens }: Props) {
   const viewport = useRef<HTMLDivElement>(null);
   const instructionsId = useId();
-  const [isHorizontal, setIsHorizontal] = useState(false);
+  const [mode, setMode] = useState<JourneyMode>('static');
+  const isHorizontal = mode === 'horizontal';
 
   useEffect(() => {
     const node = viewport.current;
@@ -27,16 +31,76 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
     const journeyHeader = node.querySelector<HTMLElement>('[data-journey-header]');
     const rootStyles = getComputedStyle(document.documentElement);
     const backgrounds = backgroundTokens.map((token) => rootStyles.getPropertyValue(token).trim());
-    const media = window.matchMedia(horizontalJourneyQuery);
-    let removeHorizontalListeners = () => {};
+    const horizontalMedia = window.matchMedia(horizontalJourneyQuery);
+    const reducedMotionMedia = window.matchMedia(reducedMotionQuery);
+    let removeJourneyListeners = () => {};
+
+    const paintBackground = (sceneProgress: number) => {
+      const currentScene = Math.min(Math.floor(sceneProgress), backgrounds.length - 1);
+      const nextScene = Math.min(currentScene + 1, backgrounds.length - 1);
+      const localProgress = Math.min(1, Math.max(0, sceneProgress - currentScene));
+      node.style.backgroundColor = gsap.utils.interpolate(
+        backgrounds[currentScene],
+        backgrounds[nextScene],
+        localProgress,
+      );
+    };
 
     const configureJourney = () => {
-      removeHorizontalListeners();
-      setIsHorizontal(media.matches);
+      removeJourneyListeners();
       node.style.removeProperty('background-color');
       if (journeyHeader) gsap.set(journeyHeader, { clearProps: 'opacity,visibility' });
 
-      if (!media.matches) return;
+      if (!horizontalMedia.matches) {
+        if (reducedMotionMedia.matches) {
+          setMode('static');
+          return;
+        }
+
+        setMode('vertical');
+        const scenes = Array.from(node.querySelectorAll<HTMLElement>('[data-journey-scene]'));
+        let frame = 0;
+        const renderVerticalJourney = () => {
+          frame = 0;
+          const viewportCenter = window.innerHeight / 2;
+          const centers = scenes.map((scene) => {
+            const rect = scene.getBoundingClientRect();
+            return rect.top + rect.height / 2;
+          });
+
+          let sceneProgress = 0;
+          if (viewportCenter >= centers[centers.length - 1]) {
+            sceneProgress = centers.length - 1;
+          } else {
+            for (let index = 0; index < centers.length - 1; index += 1) {
+              if (viewportCenter < centers[index]) break;
+              if (viewportCenter <= centers[index + 1]) {
+                const distance = centers[index + 1] - centers[index];
+                sceneProgress = index + (viewportCenter - centers[index]) / distance;
+                break;
+              }
+            }
+          }
+          paintBackground(sceneProgress);
+        };
+        const scheduleVerticalRender = () => {
+          if (frame) return;
+          frame = window.requestAnimationFrame(renderVerticalJourney);
+        };
+
+        window.addEventListener('scroll', scheduleVerticalRender, { passive: true });
+        window.addEventListener('resize', scheduleVerticalRender);
+        renderVerticalJourney();
+
+        removeJourneyListeners = () => {
+          window.removeEventListener('scroll', scheduleVerticalRender);
+          window.removeEventListener('resize', scheduleVerticalRender);
+          if (frame) window.cancelAnimationFrame(frame);
+        };
+        return;
+      }
+
+      setMode('horizontal');
 
       const maxScroll = () => Math.max(0, node.scrollWidth - node.clientWidth);
       const moveTo = (next: number, behavior: ScrollBehavior = 'auto') => {
@@ -44,14 +108,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
       };
       const renderJourney = () => {
         const sceneProgress = node.clientWidth ? node.scrollLeft / node.clientWidth : 0;
-        const currentScene = Math.min(Math.floor(sceneProgress), backgrounds.length - 1);
-        const nextScene = Math.min(currentScene + 1, backgrounds.length - 1);
-        const localProgress = Math.min(1, Math.max(0, sceneProgress - currentScene));
-        node.style.backgroundColor = gsap.utils.interpolate(
-          backgrounds[currentScene],
-          backgrounds[nextScene],
-          localProgress,
-        );
+        paintBackground(sceneProgress);
         if (journeyHeader) {
           gsap.set(journeyHeader, {
             autoAlpha: gsap.utils.clamp(0, 1, 1 - sceneProgress * 2.2),
@@ -101,7 +158,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
       window.addEventListener('resize', handleResize);
       renderJourney();
 
-      removeHorizontalListeners = () => {
+      removeJourneyListeners = () => {
         node.removeEventListener('wheel', handleWheel);
         node.removeEventListener('scroll', renderJourney);
         node.removeEventListener('keydown', handleKey);
@@ -109,12 +166,14 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
       };
     };
 
-    media.addEventListener('change', configureJourney);
+    horizontalMedia.addEventListener('change', configureJourney);
+    reducedMotionMedia.addEventListener('change', configureJourney);
     configureJourney();
 
     return () => {
-      media.removeEventListener('change', configureJourney);
-      removeHorizontalListeners();
+      horizontalMedia.removeEventListener('change', configureJourney);
+      reducedMotionMedia.removeEventListener('change', configureJourney);
+      removeJourneyListeners();
     };
   }, [backgroundTokens]);
 
@@ -123,6 +182,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
       className={styles.journey}
       ref={viewport}
       role="region"
+      data-axis={mode}
       tabIndex={isHorizontal ? 0 : undefined}
       aria-label="Pilly product tour"
       aria-describedby={isHorizontal ? instructionsId : undefined}
@@ -135,6 +195,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
       {Children.map(children, (child, index) => (
         <div
           className={styles.scene}
+          data-journey-scene
           style={
             {
               '--scene-background': `var(${backgroundTokens[index] ?? '--background'})`,

@@ -63,6 +63,35 @@ test('touch viewports use normal vertical document flow', async ({ page }, testI
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
 });
 
+test('touch scrolling continuously blends scene backgrounds', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'desktop', 'Vertical background motion is touch-only.');
+
+  await page.goto('/');
+  const journey = page.getByRole('region', { name: 'Pilly product tour' });
+  await expect(journey).toHaveAttribute('data-axis', 'vertical');
+  const first = await journey.evaluate((node) => getComputedStyle(node).backgroundColor);
+
+  await page.getByRole('region', { name: 'Your routine, at a glance.' }).scrollIntoViewIfNeeded();
+  await expect
+    .poll(() => journey.evaluate((node) => getComputedStyle(node).backgroundColor))
+    .not.toBe(first);
+});
+
+test('closing copy keeps its mobile gutters', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'desktop', 'Mobile projects own the gutter gate.');
+
+  await page.goto('/');
+  const heading = page.getByRole('heading', { name: 'Ready when you are.' });
+  await heading.scrollIntoViewIfNeeded();
+  const box = await heading.boundingBox();
+  const viewport = page.viewportSize();
+
+  expect(box).not.toBeNull();
+  expect(viewport).not.toBeNull();
+  expect(box!.x).toBeGreaterThanOrEqual(12);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(viewport!.width - 12);
+});
+
 test('reduced motion keeps the desktop experience vertically scrollable', async ({
   page,
 }, testInfo) => {

@@ -10,6 +10,10 @@
   background: var(--scene-background, var(--background));
 }
 
+.journey[data-axis='vertical'] .scene {
+  background: transparent;
+}
+
 .srOnly {
   position: absolute;
   width: 1px;

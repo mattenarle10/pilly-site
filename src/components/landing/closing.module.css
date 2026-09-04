@@ -10,6 +10,7 @@
 .inner {
   display: grid;
   width: var(--shell);
+  margin-inline: auto;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: clamp(56px, 10vw, 160px);
@@ -96,18 +97,19 @@
 
 @media (max-width: 680px) {
   .section {
-    place-items: end start;
-    padding-block: clamp(96px, 20vh, 160px) max(52px, env(safe-area-inset-bottom));
+    place-items: center;
+    padding-block: max(72px, env(safe-area-inset-top)) max(52px, env(safe-area-inset-bottom));
   }
 
   .inner {
     grid-template-columns: 1fr;
     align-items: start;
-    gap: 64px;
+    gap: clamp(44px, 8vh, 64px);
   }
 
   .copy h2 {
-    font-size: clamp(3.3rem, 16vw, 5rem);
+    max-width: 100%;
+    font-size: clamp(3rem, 13vw, 4rem);
   }
 
   .copy p {
