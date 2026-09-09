@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: `Privacy · ${site.name}`,
   description: 'How Pilly handles local medicine data, optional Plus backup, and account data.',
   alternates: { canonical: '/privacy' },
+  openGraph: {
+    title: `Privacy · ${site.name}`,
+    description: 'How Pilly handles local medicine data, optional Plus backup, and account data.',
+    url: '/privacy',
+    type: 'website',
+  },
 };
 
 export default function PrivacyPage() {

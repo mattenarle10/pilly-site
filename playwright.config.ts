@@ -27,7 +27,7 @@ export default defineConfig({
   webServer: externalBaseURL
     ? undefined
     : {
-        command: 'bun run dev --hostname 127.0.0.1 --port 4173',
+        command: 'bun run preview',
         url: baseURL,
         reuseExistingServer: false,
       },

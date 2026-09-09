@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: `Terms · ${site.name}`,
   description: 'Terms for using the Pilly iPhone app and Pilly Plus.',
   alternates: { canonical: '/terms' },
+  openGraph: {
+    title: `Terms · ${site.name}`,
+    description: 'Terms for using the Pilly iPhone app and Pilly Plus.',
+    url: '/terms',
+    type: 'website',
+  },
 };
 
 export default function TermsPage() {

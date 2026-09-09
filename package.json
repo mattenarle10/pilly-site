@@ -8,9 +8,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test:e2e": "playwright test",
-    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run build && bun run test:e2e"
+    "verify": "bun run format:check && bun run lint && bun run typecheck && bun run build && bun run test:e2e",
+    "preview": "serve out --listen tcp://127.0.0.1:4173 --no-clipboard"
   },
   "dependencies": {
     "@gsap/react": "2.1.2",
@@ -29,9 +30,14 @@
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.4",
     "prettier": "3.9.6",
+    "serve": "14.2.6",
     "typescript": "6.0.3"
   },
   "trustedDependencies": [
     "unrs-resolver"
-  ]
+  ],
+  "packageManager": "bun@1.4.0",
+  "engines": {
+    "node": "24.x"
+  }
 }

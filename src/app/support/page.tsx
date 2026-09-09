@@ -7,6 +7,12 @@ export const metadata: Metadata = {
   title: `Support · ${site.name}`,
   description: 'Get help with Pilly, Pilly Plus, subscriptions, backup, or account deletion.',
   alternates: { canonical: '/support' },
+  openGraph: {
+    title: `Support · ${site.name}`,
+    description: 'Get help with Pilly, Pilly Plus, subscriptions, backup, or account deletion.',
+    url: '/support',
+    type: 'website',
+  },
 };
 
 export default function SupportPage() {

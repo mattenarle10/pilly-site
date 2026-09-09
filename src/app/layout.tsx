@@ -7,6 +7,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  icons: { icon: '/favicon.png' },
   title: `${site.name} · Medicine tracker for iPhone`,
   description: site.description,
   alternates: { canonical: '/' },
