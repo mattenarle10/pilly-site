@@ -103,17 +103,28 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
       width: Math.min(viewport.width - x, box.width + 40),
       height: Math.min(viewport.height - y, box.height + 40),
     };
-    const rendered = await page.screenshot({
-      clip,
-      animations: 'disabled',
-      path: testInfo.outputPath('headline.png'),
-    });
+    // WebKit can finish repainting inherited text color after its first capture.
+    // Require a stable render on each side without relaxing the pixel comparison.
+    const stableScreenshot = async (name: string) => {
+      let previous: Buffer | undefined;
+      await expect
+        .poll(async () => {
+          const current = await page.screenshot({ clip, animations: 'disabled' });
+          const stable = previous?.equals(current) ?? false;
+          previous = current;
+          return stable;
+        })
+        .toBe(true);
+      await testInfo.attach(name, { body: previous!, contentType: 'image/png' });
+      return previous!;
+    };
+    const rendered = await stableScreenshot('headline');
     // Compare actual glyph paint against the same text without any internal clipping.
     // Geometry checks alone cannot detect missing punctuation or cropped descenders.
     await heading.evaluate((node) => {
       for (const child of node.querySelectorAll<HTMLElement>('*')) child.style.overflow = 'visible';
     });
-    const unclipped = await page.screenshot({ clip, animations: 'disabled' });
+    const unclipped = await stableScreenshot('headline-unclipped');
     expect(
       rendered.equals(unclipped),
       'headline should paint identically without clipping masks',
