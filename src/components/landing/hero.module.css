@@ -1,4 +1,5 @@
 .hero {
+  min-width: 0;
   display: grid;
   min-height: calc(100svh - var(--header-height));
   align-content: center;
@@ -7,6 +8,7 @@
 }
 
 .copy {
+  min-width: 0;
   display: grid;
   width: var(--shell);
   justify-items: center;
@@ -15,7 +17,7 @@
 }
 
 .copy h1 {
-  max-width: 900px;
+  max-width: min(100%, 900px);
   margin: 0;
   font-size: clamp(3.8rem, 7.2vw, 7.2rem);
   font-weight: 600;
@@ -26,9 +28,7 @@
 
 .line {
   display: block;
-  overflow: clip;
-  padding-bottom: 0.07em;
-  margin-bottom: -0.07em;
+  overflow: visible;
 }
 
 .line > span {
@@ -37,7 +37,7 @@
 }
 
 .copy p {
-  max-width: 560px;
+  max-width: min(100%, 560px);
   margin: 24px 0 28px;
   color: var(--text-secondary);
   font-size: clamp(1.04rem, 1.5vw, 1.24rem);
@@ -46,6 +46,7 @@
 }
 
 .action {
+  max-width: 100%;
   display: inline-flex;
   min-height: 52px;
   align-items: center;
@@ -66,6 +67,8 @@
 }
 
 .ctaGroup {
+  min-width: 0;
+  max-width: 100%;
   display: grid;
   justify-items: center;
   gap: 18px;
@@ -112,7 +115,7 @@
 }
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .hero {
+  :global(html[data-horizontal-journey]) .hero {
     height: 100%;
     min-height: 100%;
     overflow: hidden;

@@ -11,7 +11,7 @@
 .inner {
   display: grid;
   width: var(--shell);
-  grid-template-columns: minmax(280px, 0.8fr) minmax(520px, 1.2fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   align-items: center;
   gap: clamp(52px, 8vw, 118px);
 }
@@ -160,7 +160,7 @@
   font-weight: 600;
 }
 
-@media (max-width: 840px) {
+@media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;
     gap: 44px;
@@ -263,7 +263,7 @@
 }
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .section {
+  :global(html[data-horizontal-journey]) .section {
     height: 100%;
     min-height: 100%;
     overflow: clip;

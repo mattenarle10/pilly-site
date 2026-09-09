@@ -1,14 +1,15 @@
 'use client';
 
 import gsap from 'gsap';
-import { Children, useEffect, useId, useRef, useState } from 'react';
+import { Children, useLayoutEffect, useId, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
+
+import { horizontalJourneyQuery } from '@/motion/journey-mode';
+import { useCardMotion } from '@/motion/use-card-motion';
 
 import styles from './journey.module.css';
 
 const defaultBackgroundTokens = ['--background', '--surface'] as const;
-const horizontalJourneyQuery =
-  '(min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
 const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
 
 type JourneyMode = 'static' | 'vertical' | 'horizontal';
@@ -23,8 +24,9 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
   const instructionsId = useId();
   const [mode, setMode] = useState<JourneyMode>('static');
   const isHorizontal = mode === 'horizontal';
+  useCardMotion(viewport, mode);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const node = viewport.current;
     if (!node) return;
 
@@ -48,6 +50,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
 
     const configureJourney = () => {
       removeJourneyListeners();
+      document.documentElement.toggleAttribute('data-horizontal-journey', horizontalMedia.matches);
       node.style.removeProperty('background-color');
       if (journeyHeader) gsap.set(journeyHeader, { clearProps: 'opacity,visibility' });
 
@@ -116,6 +119,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
         }
       };
       const handleWheel = (event: WheelEvent) => {
+        if (event.ctrlKey || event.defaultPrevented) return;
         const dominantDelta =
           Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
         const unit =
@@ -171,6 +175,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
     configureJourney();
 
     return () => {
+      document.documentElement.removeAttribute('data-horizontal-journey');
       horizontalMedia.removeEventListener('change', configureJourney);
       reducedMotionMedia.removeEventListener('change', configureJourney);
       removeJourneyListeners();

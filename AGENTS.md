@@ -27,6 +27,8 @@ Bun 1.4.0, and Node 24 LTS. Keep `output: 'export'`; no server-only features.
 - Reuse global color tokens, CSS Modules, existing icons, and medicine illustrations.
 - Keep touch controls at least 44 CSS pixels and visible keyboard focus.
 - Desktop supports horizontal travel; touch and reduced-motion views stay vertical.
+- Keep scroll motion transform-only, reversible, scoped with `useGSAP`, and cleaned up on navigation.
+- Keep the six desktop ribbon cards inside their scene; touch layouts retain native swiping.
 - Review desktop, iPhone, and 320px layouts for clipping, reflow, and legal-page scrolling.
 - Early access intentionally opens email; do not invent a signup backend or change legal claims.
 - Fix confirmed defects without unrelated redesigns or abstractions.
@@ -36,7 +38,7 @@ Bun 1.4.0, and Node 24 LTS. Keep `output: 'export'`; no server-only features.
 Use Node 24 (`.nvmrc`) and Bun 1.4.0 (`packageManager`).
 
 - Install: `bun install --frozen-lockfile`.
-- Browser setup: `bunx playwright install chromium webkit` (CI also needs `--with-deps`).
+- Browser setup: `bunx playwright install chromium firefox webkit` (CI also needs `--with-deps`).
 - Develop: `bun run dev`.
 - Full check: `bun run verify` (format, lint, generated route types, TypeScript, export, browsers).
 - Preview: `bun run build && bun run preview` at http://127.0.0.1:4173.

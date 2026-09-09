@@ -11,7 +11,7 @@
 .inner {
   display: grid;
   width: var(--shell);
-  grid-template-columns: minmax(500px, 1.15fr) minmax(300px, 0.85fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   align-items: center;
   gap: clamp(54px, 8vw, 116px);
 }
@@ -73,6 +73,11 @@
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(236, 234, 247, 0.7));
 }
 
+.previewContent {
+  display: grid;
+  place-items: center;
+}
+
 .eyebrow {
   color: var(--text-secondary);
   font-size: 0.82rem;
@@ -127,6 +132,10 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.formOptions {
+  flex-wrap: wrap;
 }
 
 .formOption {
@@ -204,6 +213,16 @@
   from {
     opacity: 0.7;
     transform: scale(0.94) rotate(-2deg);
+  }
+}
+
+@media (max-width: 1100px) {
+  .controls {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .preview {
+    min-height: 300px;
   }
 }
 
@@ -297,7 +316,7 @@
 }
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .section {
+  :global(html[data-horizontal-journey]) .section {
     height: 100%;
     min-height: 100%;
     overflow: clip;

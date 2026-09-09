@@ -16,7 +16,10 @@ for (const route of routes) {
 }
 
 test('small phone remains usable at 200% text size', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'small-phone', 'Small-phone project owns the reflow gate.');
+  test.skip(
+    (testInfo.project.use.viewport?.width ?? 1280) > 320,
+    'Small-phone project owns the reflow gate.',
+  );
 
   await page.goto('/');
   await page.locator('html').evaluate((node) => {

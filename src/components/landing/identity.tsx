@@ -39,22 +39,24 @@ export function Identity() {
           </span>
         </div>
 
-        <div className={styles.studio}>
+        <div className={styles.studio} data-motion-group="identity">
           <div
             className={styles.preview}
             aria-live="polite"
             aria-label={`Amoxicillin preview: ${formLabel}, ${palette.label}`}
           >
-            <span className={styles.eyebrow}>Amoxicillin</span>
-            <div className={styles.medicineFrame} key={`${form}-${paletteIndex}`}>
-              <Medicine
-                className={styles.medicine}
-                form={form}
-                color={palette.primary}
-                secondaryColor={palette.secondary}
-              />
+            <div className={styles.previewContent} data-card-motion>
+              <span className={styles.eyebrow}>Amoxicillin</span>
+              <div className={styles.medicineFrame} key={`${form}-${paletteIndex}`}>
+                <Medicine
+                  className={styles.medicine}
+                  form={form}
+                  color={palette.primary}
+                  secondaryColor={palette.secondary}
+                />
+              </div>
+              <span className={styles.identity}>{formLabel}</span>
             </div>
-            <span className={styles.identity}>{formLabel}</span>
           </div>
 
           <div className={styles.controls}>

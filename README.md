@@ -12,7 +12,7 @@ from this directory. The repo records Node in `.nvmrc` and Bun in `package.json`
 
 ```sh
 bun install --frozen-lockfile
-bunx playwright install chromium webkit
+bunx playwright install chromium firefox webkit
 bun run dev
 ```
 
@@ -26,8 +26,12 @@ bun run verify
 
 This checks formatting, lint, generated Next.js route types, TypeScript, the
 production static export, and Playwright tests against that export. Browser
-projects cover desktop Chromium, iPhone WebKit, and 320px touch Chromium.
-Accessibility checks include reduced motion and 200% text reflow.
+projects cover desktop Chromium, Firefox, and WebKit; iPhone and iPad WebKit;
+Android-sized Chromium; and 320px touch Chromium.
+Accessibility checks include reduced motion, 200% text reflow, and ordinary text
+wrapping. Motion checks cover container/card scroll reversal, rotation, navigation
+cleanup, and use without JavaScript. Startup checks delay JavaScript on initial
+load and reload, checking hero visibility through hydration and stable layout.
 
 ```sh
 bun run build
@@ -45,7 +49,7 @@ PLAYWRIGHT_BASE_URL=https://your-preview.vercel.app bun run test:e2e
 The URL must be accessible to the browser; authenticated preview protection may
 require a separate approved setup. Failure traces are saved under `test-results/`.
 If WebKit is missing after a Playwright update, rerun the browser installation.
-On Linux CI, install browsers with `bunx playwright install --with-deps chromium webkit`.
+On Linux CI, install browsers with `bunx playwright install --with-deps chromium firefox webkit`.
 
 ## Agent and design guidance
 
@@ -97,3 +101,17 @@ revert or fix through the same pull-request process.
 
 Do not commit, push, change account settings, or deploy without Matt's explicit
 request. Local implementation and passing checks do not mean deployment is active.
+
+## Motion and mobile Safari
+
+The supported design target is iOS Safari 16.4+ and current desktop browsers.
+Scroll-linked container and card transforms use the installed GSAP ScrollTrigger plugin;
+there is no extra animation dependency. Desktop cards follow the horizontal
+journey, while touch layouts keep native document/ribbon scrolling. Reduced
+motion disables scroll transforms. The hero stays visible from first paint; an
+inline script selects the desktop layout before hydration. Content remains visible
+without JavaScript.
+
+Browser emulation does not verify a particular released Safari/iOS version.
+See [the device checklist](docs/mobile-checks.md) for real-device checks and
+Safari Web Inspector performance review before claiming that coverage.

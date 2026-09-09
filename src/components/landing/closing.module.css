@@ -132,7 +132,7 @@
 }
 
 @media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .section {
+  :global(html[data-horizontal-journey]) .section {
     height: 100%;
     min-height: 100%;
     overflow: clip;

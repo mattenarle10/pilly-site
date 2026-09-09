@@ -48,14 +48,14 @@ export function Routine() {
           <p>Due now, recorded, and coming up.</p>
         </div>
 
-        <div className={styles.board}>
+        <div className={styles.board} data-motion-group="routine">
           <header className={styles.boardHeader}>
             <strong>Today</strong>
             <span>Wednesday</span>
           </header>
 
           <div className={styles.packs}>
-            <article className={`${styles.pack} ${styles.recorded}`}>
+            <article data-card-motion className={`${styles.pack} ${styles.recorded}`}>
               <div className={styles.packTop}>
                 <strong>6:30 AM</strong>
                 <span className={styles.state}>
@@ -66,7 +66,7 @@ export function Routine() {
               <DoseMarks doses={morning} more={2} />
             </article>
 
-            <article className={`${styles.pack} ${styles.due}`}>
+            <article data-card-motion className={`${styles.pack} ${styles.due}`}>
               <div className={styles.packTop}>
                 <strong>8:00 AM</strong>
                 <span className={styles.dueCount}>5 due</span>
@@ -74,7 +74,7 @@ export function Routine() {
               <DoseMarks doses={midday} more={2} />
             </article>
 
-            <article className={`${styles.pack} ${styles.progress}`}>
+            <article data-card-motion className={`${styles.pack} ${styles.progress}`}>
               <div className={styles.packTop}>
                 <strong>9:00 AM</strong>
                 <span className={styles.progressCopy}>

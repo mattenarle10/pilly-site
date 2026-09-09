@@ -8,7 +8,7 @@ export function Closing() {
   return (
     <section className={styles.section} aria-labelledby="closing-title">
       <div className={styles.inner}>
-        <div className={styles.copy}>
+        <div className={styles.copy} data-motion-group="closing">
           <h2 id="closing-title">Ready when you are.</h2>
           <p>Private medicine tracking for iPhone.</p>
           <EarlyAccessLink className={styles.action} />
