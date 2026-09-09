@@ -1,5 +1,12 @@
 node_modules/
-dist/
-.astro/
+.next/
+out/
+playwright-report/
+test-results/
+next-env.d.ts
 .DS_Store
 *.log
+*.tsbuildinfo
+.vercel
+.env*
+!.env.example

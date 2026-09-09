@@ -1,0 +1,15 @@
+.intro {
+  display: grid;
+  width: 100%;
+  min-height: 100svh;
+  grid-template-rows: auto auto;
+  background: transparent;
+}
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .intro {
+    height: 100%;
+    min-height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+}

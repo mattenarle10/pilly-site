@@ -1,0 +1,271 @@
+.section {
+  display: grid;
+  width: 100%;
+  min-height: 100svh;
+  place-items: center;
+  overflow: visible;
+  padding: clamp(84px, 10vw, 136px) 0;
+  background: transparent;
+}
+
+.inner {
+  display: grid;
+  width: var(--shell);
+  grid-template-columns: minmax(280px, 0.8fr) minmax(520px, 1.2fr);
+  align-items: center;
+  gap: clamp(52px, 8vw, 118px);
+}
+
+.copy h2 {
+  margin: 0;
+  font-size: clamp(3.5rem, 5.6vw, 6rem);
+  font-weight: 600;
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+
+.copy p {
+  margin: 24px 0 0;
+  color: var(--text-secondary);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.board {
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid rgba(140, 64, 92, 0.12);
+  border-radius: 42px;
+  background: var(--background);
+}
+
+.boardHeader,
+.packTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.boardHeader {
+  padding: 0 4px 22px;
+}
+
+.boardHeader strong {
+  font-size: 1.35rem;
+  letter-spacing: -0.025em;
+}
+
+.boardHeader span {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.packs {
+  display: grid;
+  gap: 12px;
+}
+
+.pack {
+  min-height: 144px;
+  padding: 22px 24px;
+  border: 1px solid transparent;
+  border-radius: 28px;
+}
+
+.packTop strong {
+  font-size: 1.32rem;
+  letter-spacing: -0.025em;
+}
+
+.recorded {
+  background: var(--success-soft);
+}
+
+.due {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.progress {
+  background: linear-gradient(90deg, var(--success-soft) 0 80%, var(--surface) 80% 100%);
+}
+
+.state,
+.dueCount,
+.progressCopy {
+  color: var(--success);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dueCount {
+  color: var(--brand-strong);
+}
+
+.due .more {
+  color: var(--brand-strong);
+}
+
+.progressCopy {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+  color: var(--text-secondary);
+}
+
+.progressCopy b {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.progressCopy small {
+  font-size: 0.76rem;
+  font-weight: 500;
+}
+
+.doses {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.dose {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 3px solid var(--background);
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.dose + .dose {
+  margin-left: -8px;
+}
+
+.dose svg {
+  width: 35px;
+  height: 35px;
+}
+
+.more {
+  margin-left: 7px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+@media (max-width: 840px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .copy {
+    text-align: center;
+  }
+
+  .copy h2 br {
+    display: none;
+  }
+
+  .board {
+    width: min(100%, 620px);
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .section {
+    padding-block: 52px;
+  }
+
+  .copy h2 {
+    font-size: clamp(2.9rem, 13vw, 3.8rem);
+  }
+
+  .copy p {
+    margin-top: 14px;
+    font-size: 1rem;
+  }
+
+  .inner {
+    gap: 30px;
+  }
+
+  .board {
+    padding: 12px;
+    border-radius: 28px;
+  }
+
+  .boardHeader {
+    padding: 2px 4px 12px;
+  }
+
+  .boardHeader strong {
+    font-size: 1.15rem;
+  }
+
+  .packs {
+    gap: 8px;
+  }
+
+  .pack {
+    min-height: 102px;
+    padding: 14px 16px;
+    border-radius: 20px;
+  }
+
+  .packTop strong {
+    font-size: 1.08rem;
+  }
+
+  .state,
+  .dueCount,
+  .progressCopy,
+  .progressCopy b {
+    font-size: 0.78rem;
+  }
+
+  .progressCopy small {
+    font-size: 0.68rem;
+  }
+
+  .doses {
+    margin-top: 10px;
+  }
+
+  .dose {
+    width: 38px;
+    height: 38px;
+    border-width: 2px;
+  }
+
+  .dose svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .more {
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section * {
+    transition: none;
+  }
+}
+
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .section {
+    height: 100%;
+    min-height: 100%;
+    overflow: clip;
+  }
+}
