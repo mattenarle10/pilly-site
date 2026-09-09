@@ -93,6 +93,13 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
         .toBe(true);
     }
     const heading = page.getByRole('heading', { level: 1 });
+    // Compare glyph shape independently of WebKit's inherited-color repaint.
+    // Explicit color keeps both captures equivalent without masking cropped pixels.
+    await heading.evaluate((node) => {
+      for (const child of [node, ...node.querySelectorAll<HTMLElement>('*')]) {
+        (child as HTMLElement).style.color = 'rgb(0, 0, 0)';
+      }
+    });
     const box = (await heading.boundingBox())!;
     const viewport = page.viewportSize()!;
     const x = Math.max(0, box.x - 20);
@@ -103,7 +110,6 @@ for (const reducedMotion of ['reduce', 'no-preference'] as const) {
       width: Math.min(viewport.width - x, box.width + 40),
       height: Math.min(viewport.height - y, box.height + 40),
     };
-    // WebKit can finish repainting inherited text color after its first capture.
     // Require a stable render on each side without relaxing the pixel comparison.
     const stableScreenshot = async (name: string) => {
       let previous: Buffer | undefined;
