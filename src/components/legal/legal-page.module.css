@@ -167,7 +167,7 @@
 }
 
 .footer {
-  padding-block: 28px 38px;
+  padding-block: 28px max(38px, env(safe-area-inset-bottom));
   border-top: 1px solid rgba(43, 35, 39, 0.1);
   color: var(--text-secondary);
   font-size: 0.76rem;
@@ -181,7 +181,8 @@
 
 .footer a {
   min-height: 44px;
-  align-content: center;
+  display: inline-flex;
+  align-items: center;
   transition: color var(--motion-fast) ease;
 }
 

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('desktop wheel creates continuous horizontal travel', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Mouse-wheel navigation is desktop-only.');
+  test.skip(Boolean(testInfo.project.use.hasTouch), 'Mouse-wheel navigation is desktop-only.');
 
   await page.goto('/');
   const journey = page.getByRole('region', { name: 'Pilly product tour' });
@@ -22,7 +22,10 @@ test('desktop wheel creates continuous horizontal travel', async ({ page }, test
 });
 
 test('desktop journey supports explicit keyboard navigation', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Keyboard journey enhancement is desktop-only.');
+  test.skip(
+    Boolean(testInfo.project.use.hasTouch),
+    'Keyboard journey enhancement is desktop-only.',
+  );
 
   await page.goto('/');
   const journey = page.getByRole('region', { name: 'Pilly product tour' });
@@ -42,7 +45,7 @@ test('desktop journey supports explicit keyboard navigation', async ({ page }, t
 });
 
 test('touch viewports use normal vertical document flow', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === 'desktop', 'Vertical reflow is covered on touch viewports.');
+  test.skip(!testInfo.project.use.hasTouch, 'Vertical reflow is covered on touch viewports.');
 
   await page.goto('/');
   const journey = page.getByRole('region', { name: 'Pilly product tour' });
@@ -64,7 +67,7 @@ test('touch viewports use normal vertical document flow', async ({ page }, testI
 });
 
 test('touch scrolling continuously blends scene backgrounds', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === 'desktop', 'Vertical background motion is touch-only.');
+  test.skip(!testInfo.project.use.hasTouch, 'Vertical background motion is touch-only.');
 
   await page.goto('/');
   const journey = page.getByRole('region', { name: 'Pilly product tour' });
@@ -78,7 +81,7 @@ test('touch scrolling continuously blends scene backgrounds', async ({ page }, t
 });
 
 test('closing copy keeps its mobile gutters', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name === 'desktop', 'Mobile projects own the gutter gate.');
+  test.skip(!testInfo.project.use.hasTouch, 'Mobile projects own the gutter gate.');
 
   await page.goto('/');
   const heading = page.getByRole('heading', { name: 'Ready when you are.' });
@@ -95,7 +98,7 @@ test('closing copy keeps its mobile gutters', async ({ page }, testInfo) => {
 test('reduced motion keeps the desktop experience vertically scrollable', async ({
   page,
 }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Desktop capability fallback is enough here.');
+  test.skip(Boolean(testInfo.project.use.hasTouch), 'Desktop capability fallback is enough here.');
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
 
@@ -114,7 +117,10 @@ test('reduced motion keeps the desktop experience vertically scrollable', async 
 });
 
 test('the desktop canvas background fades between scenes', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Canvas interpolation is a desktop enhancement.');
+  test.skip(
+    Boolean(testInfo.project.use.hasTouch),
+    'Canvas interpolation is a desktop enhancement.',
+  );
 
   await page.goto('/');
   const journey = page.getByRole('region', { name: 'Pilly product tour' });

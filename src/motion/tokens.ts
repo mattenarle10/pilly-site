@@ -1,4 +1,9 @@
 export const motion = {
+  scrollSmoothing: 0.2,
+  ribbonTravel: 8,
+  cardTravel: 6,
+  routineTravel: 20,
+  identityTravel: 16,
   press: 0.14,
   selection: 0.16,
   feedback: 0.18,

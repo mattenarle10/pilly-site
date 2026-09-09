@@ -27,7 +27,7 @@ jobs:
         with:
           bun-version: 1.4.0
       - run: bun install --frozen-lockfile
-      - run: bunx playwright install --with-deps chromium webkit
+      - run: bunx playwright install --with-deps chromium firefox webkit
       - run: bun run verify
       - name: Upload browser failure artifacts
         if: failure()
