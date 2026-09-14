@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { EarlyAccessLink } from '@/components/actions';
+import { AppStoreLink } from '@/components/actions';
 
 import styles from './closing.module.css';
 
@@ -11,7 +11,7 @@ export function Closing() {
         <div className={styles.copy} data-motion-group="closing">
           <h2 id="closing-title">Ready when you are.</h2>
           <p>Private medicine tracking for iPhone.</p>
-          <EarlyAccessLink className={styles.action} />
+          <AppStoreLink className={styles.action} />
           <span className={styles.note}>No account required.</span>
         </div>
 

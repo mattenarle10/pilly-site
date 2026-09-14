@@ -2,8 +2,8 @@
 
 Static Pilly marketing site built with Next.js, TypeScript, CSS Modules, and GSAP.
 The landing page contains a hero, routine examples, interactive medicine identity
-controls, and a closing early-access link. Privacy, terms, and support have their
-own routes. Early access currently opens an email; there is no signup backend.
+controls, and App Store download links. Privacy, terms, and support have their own
+routes. Download actions use the public Pilly App Store listing.
 
 ## Local setup
 

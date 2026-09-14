@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { EarlyAccessLink } from '@/components/actions';
+import { AppStoreLink } from '@/components/actions';
 
 import styles from './header.module.css';
 
@@ -13,7 +13,7 @@ export function Header() {
           <Image src="/app-icon.png" width={38} height={38} alt="" loading="eager" />
           <span>Pilly</span>
         </Link>
-        <EarlyAccessLink className={styles.action} direction="up-right" />
+        <AppStoreLink className={styles.action} direction="up-right" />
       </div>
     </header>
   );

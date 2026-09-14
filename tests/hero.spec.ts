@@ -4,7 +4,17 @@ test('renders the accepted hero checkpoint', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.getByRole('heading', { name: 'Know what’s due. Keep moving.' })).toBeVisible();
-  await expect(page.getByRole('link', { name: /join early access/i }).first()).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: /download on the app store/i }).first(),
+  ).toBeVisible();
+  const downloads = page.getByRole('link', {
+    name: /download on the app store/i,
+    includeHidden: true,
+  });
+  await expect(downloads).toHaveCount(3);
+  for (const link of await downloads.all()) {
+    await expect(link).toHaveAttribute('href', 'https://apps.apple.com/app/id6801062753');
+  }
   await expect(page.getByLabel('Medicine forms', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /medicines/i })).toHaveCount(0);
   await expect(

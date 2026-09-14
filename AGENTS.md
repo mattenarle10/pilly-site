@@ -30,7 +30,7 @@ Bun 1.4.0, and Node 24 LTS. Keep `output: 'export'`; no server-only features.
 - Keep scroll motion transform-only, reversible, scoped with `useGSAP`, and cleaned up on navigation.
 - Keep the six desktop ribbon cards inside their scene; touch layouts retain native swiping.
 - Review desktop, iPhone, and 320px layouts for clipping, reflow, and legal-page scrolling.
-- Early access intentionally opens email; do not invent a signup backend or change legal claims.
+- Download links use the public App Store URL in `src/config`; preserve support email links and legal claims.
 - Fix confirmed defects without unrelated redesigns or abstractions.
 
 ## Commands and validation

@@ -62,7 +62,7 @@ test('touch viewports use normal vertical document flow', async ({ page }, testI
 
   const closing = page.getByRole('region', { name: 'Ready when you are.' });
   await closing.scrollIntoViewIfNeeded();
-  await expect(closing.getByRole('link', { name: /join early access/i })).toBeVisible();
+  await expect(closing.getByRole('link', { name: /download on the app store/i })).toBeVisible();
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
 });
 

@@ -5,7 +5,7 @@ test('updates the medicine identity from real controls', async ({ page }) => {
   const section = page.getByRole('region', { name: 'Recognize it instantly.' });
   await section.scrollIntoViewIfNeeded();
   await expect(section.getByText('Private photos with Pilly Plus')).toBeVisible();
-  await expect(section.getByRole('link', { name: /join early access/i })).toHaveCount(0);
+  await expect(section.getByRole('link', { name: /download on the app store/i })).toHaveCount(0);
 
   const capsule = section.getByRole('button', { name: 'Capsule' });
   const tablet = section.getByRole('button', { name: 'Tablet' });

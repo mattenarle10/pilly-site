@@ -1,1 +1,1 @@
-export { EarlyAccessLink } from './early-access-link';
+export { AppStoreLink } from './app-store-link';
