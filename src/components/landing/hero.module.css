@@ -62,10 +62,6 @@
     background-color var(--motion-fast) ease;
 }
 
-.action svg {
-  transition: transform var(--motion-base) var(--ease-out);
-}
-
 .ctaGroup {
   min-width: 0;
   max-width: 100%;
@@ -79,16 +75,8 @@
   transform: translateY(-1px);
 }
 
-.action:hover svg {
-  transform: translateX(4px);
-}
-
 .action:active {
   transform: translateY(0) scale(0.975);
-}
-
-.action:active svg {
-  transform: translateX(2px);
 }
 
 .note {

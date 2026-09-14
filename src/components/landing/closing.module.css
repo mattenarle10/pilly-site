@@ -40,41 +40,43 @@
 
 .action {
   display: inline-flex;
-  min-height: 52px;
-  align-items: center;
-  gap: 9px;
-  padding-inline: 24px;
-  border-radius: 999px;
-  background: var(--brand);
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
-  transition:
-    transform var(--motion-fast) var(--ease-out),
-    background-color var(--motion-fast) ease;
+  align-self: flex-start;
+  padding: 13px;
+  margin: -13px;
+  border-radius: 8px;
 }
 
-.action svg {
-  transition: transform var(--motion-base) var(--ease-out);
-}
-
-.action:hover {
-  background: var(--brand-strong);
-  transform: translateY(-1px);
-}
-
-.action:hover svg {
-  transform: translateX(4px);
-}
-
-.action:active {
-  transform: scale(0.975);
+.action img {
+  display: block;
+  width: auto;
+  height: 52px;
 }
 
 .note {
   margin-top: 16px;
   color: var(--text-secondary);
   font-size: 0.82rem;
+}
+
+.footer {
+  display: grid;
+  gap: 16px;
+}
+
+.credit {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 4px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  text-decoration: none;
+}
+
+.credit:hover {
+  color: var(--brand-strong);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .links {
