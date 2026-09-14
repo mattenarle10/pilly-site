@@ -1,4 +1,4 @@
-import { EarlyAccessLink } from '@/components/actions';
+import { AppStoreLink } from '@/components/actions';
 
 import { Ribbon } from './ribbon';
 import styles from './hero.module.css';
@@ -17,7 +17,7 @@ export function Hero() {
         </h1>
         <p data-hero-copy>Private medicine reminders and tracking for iPhone.</p>
         <div className={styles.ctaGroup} data-hero-copy>
-          <EarlyAccessLink className={styles.action} />
+          <AppStoreLink className={styles.action} />
           <span className={styles.note}>No account required.</span>
         </div>
       </div>
