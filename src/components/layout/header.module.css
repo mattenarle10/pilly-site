@@ -53,26 +53,14 @@
     background-color var(--motion-fast) ease;
 }
 
-.action svg {
-  transition: transform var(--motion-base) var(--ease-out);
-}
-
 .action:hover {
   border-color: rgba(140, 64, 92, 0.38);
   background: var(--surface);
   transform: translateY(-1px);
 }
 
-.action:hover svg {
-  transform: translate(2px, -2px);
-}
-
 .action:active {
   transform: translateY(0) scale(0.975);
-}
-
-.action:active svg {
-  transform: translate(1px, -1px);
 }
 
 @media (max-width: 680px) {

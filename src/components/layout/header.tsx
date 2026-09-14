@@ -13,7 +13,7 @@ export function Header() {
           <Image src="/app-icon.png" width={38} height={38} alt="" loading="eager" />
           <span>Pilly</span>
         </Link>
-        <AppStoreLink className={styles.action} direction="up-right" />
+        <AppStoreLink className={styles.action} />
       </div>
     </header>
   );
