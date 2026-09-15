@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: 'Terms for using the Pilly iPhone app and Pilly Plus.',
     url: '/terms',
     type: 'website',
+    siteName: site.name,
+    images: [site.socialImage],
   },
 };
 

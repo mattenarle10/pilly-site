@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
@@ -10,14 +11,20 @@ export const viewport: Viewport = { viewportFit: 'cover' };
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  icons: { icon: '/favicon.png' },
-  title: `${site.name} · Medicine tracker for iPhone`,
+  icons: { icon: '/favicon.png', apple: '/app-icon.png' },
+  applicationName: site.name,
+  other: { 'apple-itunes-app': 'app-id=6801062753' },
+  twitter: { card: 'summary_large_image', images: [site.socialImage] },
+  title: site.title,
   description: site.description,
   alternates: { canonical: '/' },
   openGraph: {
-    title: `${site.name} · Medicine tracker for iPhone`,
+    title: site.title,
     description: site.description,
     type: 'website',
+    siteName: site.name,
+    locale: 'en_US',
+    images: [site.socialImage],
     url: '/',
   },
 };
@@ -33,7 +40,10 @@ export default function Layout({ children }: Readonly<{ children: ReactNode }>) 
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
