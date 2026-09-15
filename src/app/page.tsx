@@ -19,6 +19,7 @@ export default function Home() {
             url: site.url,
             description: site.description,
             inLanguage: 'en',
+            sameAs: [site.appStoreUrl, site.instagramUrl],
           }).replace(/</g, '\\u003c'),
         }}
       />

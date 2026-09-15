@@ -11,6 +11,7 @@ export const site = {
     alt: 'Pilly: Know what’s due. Keep moving. Medicine reminders and tracking for iPhone.',
   },
   appStoreUrl: 'https://apps.apple.com/app/id6801062753',
+  instagramUrl: 'https://www.instagram.com/getpilly/',
   supportEmail: 'enarlem10@gmail.com',
   legalEffectiveDate: 'September 4, 2026',
   appleSubscriptionsUrl: 'https://apps.apple.com/account/subscriptions',

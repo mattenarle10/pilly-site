@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { AppStoreLink } from '@/components/actions';
+import { site } from '@/config';
 
 import styles from './closing.module.css';
 
@@ -20,6 +21,9 @@ export function Closing() {
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/support">Support</Link>
+            <a href={site.instagramUrl} target="_blank" rel="noreferrer">
+              Instagram
+            </a>
           </nav>
           <a className={styles.credit} href="https://mattenarle.com">
             Made by Matthew Enarle
