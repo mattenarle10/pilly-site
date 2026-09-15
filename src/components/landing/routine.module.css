@@ -180,18 +180,18 @@
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 680px) {
   .section {
     padding-block: 52px;
   }
 
   .copy h2 {
-    font-size: clamp(2.9rem, 13vw, 3.8rem);
+    font-size: clamp(2.5rem, 11.5vw, 3.25rem);
   }
 
   .copy p {
     margin-top: 14px;
-    font-size: 1rem;
+    font-size: 0.92rem;
   }
 
   .inner {
@@ -208,7 +208,7 @@
   }
 
   .boardHeader strong {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
   }
 
   .packs {
@@ -222,7 +222,7 @@
   }
 
   .packTop strong {
-    font-size: 1.08rem;
+    font-size: 1rem;
   }
 
   .state,

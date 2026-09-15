@@ -14,12 +14,12 @@ test('updates the medicine identity from real controls', async ({ page }) => {
   await tablet.click();
   await expect(tablet).toHaveAttribute('aria-pressed', 'true');
   await expect(capsule).toHaveAttribute('aria-pressed', 'false');
-  await expect(section.getByLabel(/Amoxicillin preview: Tablet/)).toBeVisible();
+  await expect(section.getByLabel(/Medicine preview: Tablet/)).toBeVisible();
 
   const peach = section.getByRole('button', { name: 'Peach and rose' });
   await peach.click();
   await expect(peach).toHaveAttribute('aria-pressed', 'true');
-  await expect(section.getByLabel('Amoxicillin preview: Tablet, Peach and rose')).toBeVisible();
+  await expect(section.getByLabel('Medicine preview: Tablet, Peach and rose')).toBeVisible();
 });
 
 test('keeps identity controls at least 44 CSS pixels', async ({ page }) => {

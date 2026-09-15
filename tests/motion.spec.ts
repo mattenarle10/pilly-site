@@ -75,7 +75,7 @@ test('identity controls stay aligned with their moving panel during selection', 
   const before = await relativeTop();
   await button.click();
   await expect(button).toHaveAttribute('aria-pressed', 'true');
-  await expect(section.getByLabel(/Amoxicillin preview: Tablet/)).toBeVisible();
+  await expect(section.getByLabel(/Medicine preview: Tablet/)).toBeVisible();
   expect(await relativeTop()).toBeCloseTo(before, 0);
 });
 
@@ -90,6 +90,7 @@ test('touch ribbon scales toward its center without moving the page tour', async
   const scale = () =>
     card.evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).m11);
   await expect.poll(scale).toBeLessThan(0.9999);
+  await ribbon.dispatchEvent('pointerdown');
   await ribbon.evaluate((node) => {
     const card = node.querySelectorAll<HTMLElement>('li')[2];
     node.scrollLeft +=
@@ -101,7 +102,8 @@ test('touch ribbon scales toward its center without moving the page tour', async
   await expect.poll(scale).toBeCloseTo(1, 3);
   expect(await page.locator('[data-axis]').evaluate((node) => node.scrollLeft)).toBe(0);
   await ribbon.evaluate((node) => {
-    node.scrollLeft = node.scrollWidth;
+    const source = node.querySelector<HTMLElement>('ul:not([aria-hidden])')!;
+    node.scrollLeft = source.offsetLeft + source.offsetWidth - node.clientWidth;
   });
   await expect(ribbon.getByRole('listitem').last()).toBeInViewport({ ratio: 0.999 });
   const bounds = await ribbon.getByRole('listitem').last().boundingBox();

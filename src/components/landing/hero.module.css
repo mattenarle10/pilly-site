@@ -93,12 +93,17 @@
   }
 
   .copy h1 {
-    font-size: clamp(3.4rem, 16vw, 4.8rem);
+    font-size: clamp(2.8rem, 13.5vw, 3.7rem);
     line-height: 0.96;
   }
 
   .copy p {
     margin-block: 20px 24px;
+    font-size: 0.96rem;
+  }
+
+  .action {
+    font-size: 0.92rem;
   }
 }
 

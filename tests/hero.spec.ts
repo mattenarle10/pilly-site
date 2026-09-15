@@ -18,7 +18,7 @@ test('renders the accepted hero checkpoint', async ({ page }) => {
   await expect(page.getByLabel('Medicine forms', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: /medicines/i })).toHaveCount(0);
   await expect(
-    page.getByLabel('Medicine forms', { exact: true }).getByText('Tablet'),
+    page.getByLabel('Medicine forms', { exact: true }).getByRole('listitem').first(),
   ).toBeVisible();
   await expect(page.locator('main section')).toHaveCount(4);
   await expect(page.getByRole('heading', { name: 'Ready when you are.' })).toBeVisible();
@@ -42,10 +42,33 @@ test('medicine ribbon remains a native horizontal strip on touch screens', async
   expect(overflow).toBeLessThanOrEqual(1);
 });
 
+test('phone ribbon drifts continuously without duplicating accessible medicine cards', async ({
+  page,
+}, testInfo) => {
+  test.skip((testInfo.project.use.viewport?.width ?? 999) > 680, 'Phone-only carousel.');
+  await page.goto('/');
+  const ribbon = page.getByLabel('Medicine forms', { exact: true });
+  await expect(ribbon.getByRole('listitem')).toHaveCount(6);
+  const before = await ribbon.evaluate((node) => node.scrollLeft);
+  await expect.poll(() => ribbon.evaluate((node) => node.scrollLeft)).toBeGreaterThan(before);
+});
+
+test('phone ribbon stays still with reduced motion', async ({ page }, testInfo) => {
+  test.skip((testInfo.project.use.viewport?.width ?? 999) > 680, 'Phone-only carousel.');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  const ribbon = page.getByLabel('Medicine forms', { exact: true });
+  const before = await ribbon.evaluate((node) => node.scrollLeft);
+  await page.waitForTimeout(250);
+  expect(await ribbon.evaluate((node) => node.scrollLeft)).toBe(before);
+});
+
 test('remains complete with reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  await expect(page.getByText('Inhaler')).toBeVisible();
+  await expect(
+    page.getByLabel('Medicine forms', { exact: true }).getByRole('listitem').last(),
+  ).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Ready when you are.' })).toBeVisible();
 });
 
@@ -64,6 +87,7 @@ for (const width of [901, 1440]) {
     const ribbon = page.getByRole('region', { name: 'Medicine forms', exact: true });
     const cards = ribbon.getByRole('listitem');
     await expect(cards).toHaveCount(6);
+    await expect(ribbon.locator('ul[aria-hidden="true"]')).toBeHidden();
     for (const card of await cards.all()) {
       await expect(card).toBeInViewport({ ratio: 1 });
     }

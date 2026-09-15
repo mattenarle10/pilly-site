@@ -111,11 +111,16 @@
 
   .copy h2 {
     max-width: 100%;
-    font-size: clamp(3rem, 13vw, 4rem);
+    font-size: clamp(2.6rem, 11.5vw, 3.3rem);
   }
 
   .copy p {
     margin-block: 20px 26px;
+    font-size: 0.92rem;
+  }
+
+  .action img {
+    height: 44px;
   }
 
   .links {

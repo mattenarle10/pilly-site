@@ -43,10 +43,9 @@ export function Identity() {
           <div
             className={styles.preview}
             aria-live="polite"
-            aria-label={`Amoxicillin preview: ${formLabel}, ${palette.label}`}
+            aria-label={`Medicine preview: ${formLabel}, ${palette.label}`}
           >
             <div className={styles.previewContent} data-card-motion>
-              <span className={styles.eyebrow}>Amoxicillin</span>
               <div className={styles.medicineFrame} key={`${form}-${paletteIndex}`}>
                 <Medicine
                   className={styles.medicine}

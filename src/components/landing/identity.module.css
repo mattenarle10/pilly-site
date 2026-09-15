@@ -78,13 +78,6 @@
   place-items: center;
 }
 
-.eyebrow {
-  color: var(--text-secondary);
-  font-size: 0.82rem;
-  font-weight: 550;
-  letter-spacing: 0.02em;
-}
-
 .medicineFrame {
   display: grid;
   width: 230px;
@@ -251,24 +244,24 @@
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 680px) {
   .section {
     padding-block: 14px;
   }
 
   .copy h2 {
-    font-size: clamp(2.25rem, 10vw, 2.8rem);
+    font-size: clamp(2.1rem, 9vw, 2.55rem);
   }
 
   .copy p {
     margin-top: 6px;
-    font-size: 0.92rem;
+    font-size: 0.86rem;
   }
 
   .plusNote {
     min-height: 32px;
     margin-top: 4px;
-    font-size: 0.74rem;
+    font-size: 0.7rem;
   }
 
   .inner {
@@ -303,9 +296,11 @@
     min-height: 44px;
     flex: 1;
     padding-inline: 10px;
+    font-size: 0.78rem;
   }
 
   .paletteOptions {
+    justify-content: center;
     gap: 13px;
   }
 
