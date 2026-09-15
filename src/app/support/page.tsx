@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { LegalPage } from '@/components/legal';
 import { site } from '@/config';
@@ -12,6 +13,8 @@ export const metadata: Metadata = {
     description: 'Get help with Pilly, Pilly Plus, subscriptions, backup, or account deletion.',
     url: '/support',
     type: 'website',
+    siteName: site.name,
+    images: [site.socialImage],
   },
 };
 
@@ -22,6 +25,22 @@ export default function SupportPage() {
       title="How can we help?"
       intro="Send a note about Pilly, an account, a purchase, or something that did not work as expected."
     >
+      <section>
+        <h2>Getting started with Pilly</h2>
+        <h3>Where can I download Pilly?</h3>
+        <p>
+          Pilly is a medicine reminder and tracker for iPhone.{' '}
+          <a href={site.appStoreUrl}>Download Pilly on the App Store</a> to organize your medicine
+          routine, reminders, and dose history.
+        </p>
+        <h3>Do I need an account?</h3>
+        <p>
+          No account is required to get started. Your medicine data starts on your iPhone. Cloud
+          backup is optional with Pilly Plus. Read our <Link href="/privacy">privacy policy</Link>{' '}
+          for details.
+        </p>
+      </section>
+
       <section>
         <h2>Contact</h2>
         <p>

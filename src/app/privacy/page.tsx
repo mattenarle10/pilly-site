@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: 'How Pilly handles local medicine data, optional Plus backup, and account data.',
     url: '/privacy',
     type: 'website',
+    siteName: site.name,
+    images: [site.socialImage],
   },
 };
 
@@ -53,9 +55,20 @@ export default function PrivacyPage() {
           Pilly&apos;s cloud service records limited security and reliability information, such as a
           request identifier, route, response status, time, latency, and source IP address. If you
           email support, Pilly also receives the address and information you include in that
-          message. This website does not currently use advertising or behavioral analytics cookies;
-          its hosting provider may process ordinary request information to deliver and secure the
-          site.
+          message. The website hosting provider may process ordinary request information to deliver
+          and secure the site.
+        </p>
+        <h3>Website analytics</h3>
+        <p>
+          Website analytics disclosure updated September 15, 2026. This website uses Vercel Web
+          Analytics to understand visits and improve the site. It reports aggregate page views,
+          referrers, approximate location, browser, and device information without analytics
+          cookies. This website analytics integration does not receive your medicine records or data
+          stored in the Pilly app. See{' '}
+          <a href="https://vercel.com/docs/analytics/privacy-policy">
+            Vercel&apos;s analytics privacy documentation
+          </a>{' '}
+          for details.
         </p>
       </section>
 

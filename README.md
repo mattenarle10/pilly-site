@@ -115,3 +115,14 @@ without JavaScript.
 Browser emulation does not verify a particular released Safari/iOS version.
 See [the device checklist](docs/mobile-checks.md) for real-device checks and
 Safari Web Inspector performance review before claiming that coverage.
+
+## Website analytics and search metadata
+
+Vercel Web Analytics is mounted once in the root layout using `@vercel/analytics/next`.
+Enable Web Analytics in the Vercel project's Analytics tab before deploying this integration.
+Verify page views in that dashboard after visiting the production site; local preview tests
+check script integration, not Vercel ingestion. No custom events or medicine data are sent.
+
+The public site configuration owns the description, App Store URL, and social preview image.
+Each route keeps its own canonical URL and Open Graph title. The homepage includes WebSite
+JSON-LD. The sitemap deliberately omits `lastModified` until reliable per-page dates are maintained.

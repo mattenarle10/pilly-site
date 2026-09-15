@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 const routes = [
-  { path: '/', title: 'Pilly · Medicine tracker for iPhone' },
+  { path: '/', title: 'Pilly · Medicine Reminders & Tracker for iPhone' },
   { path: '/privacy', title: 'Privacy · Pilly' },
   { path: '/terms', title: 'Terms · Pilly' },
   { path: '/support', title: 'Support · Pilly' },
@@ -59,4 +59,52 @@ test('legal routes remain scrollable and connected to the landing page', async (
   }
   await page.getByRole('link', { name: 'Back to Pilly' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Know what’s due.Keep moving.');
+});
+
+test('publishes social previews and website identity in the static export', async ({
+  page,
+  request,
+}) => {
+  await page.goto('/');
+  const identity = JSON.parse(await page.locator('script[type="application/ld+json"]').innerText());
+  expect(identity).toMatchObject({
+    '@type': 'WebSite',
+    name: 'Pilly',
+    url: 'https://getpilly.app',
+  });
+  await expect(page.locator('meta[name="apple-itunes-app"]')).toHaveAttribute(
+    'content',
+    'app-id=6801062753',
+  );
+  for (const { path } of routes) {
+    await page.goto(path);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://getpilly.app/social-preview.png',
+    );
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+      'content',
+      'summary_large_image',
+    );
+  }
+  const image = await request.get('/social-preview.png');
+  expect(image.ok()).toBe(true);
+  expect(image.headers()['content-type']).toContain('image/png');
+});
+
+test('loads Vercel Analytics once across client navigation', async ({ page }) => {
+  await page.route('**/_vercel/insights/script.js*', (route) =>
+    route.fulfill({
+      contentType: 'application/javascript',
+      body: '',
+    }),
+  );
+  await page.goto('/');
+  const script = page.locator('script[src*="/_vercel/insights/script.js"]');
+  await expect(script).toHaveCount(1);
+  const closing = page.getByRole('region', { name: 'Ready when you are.' });
+  await closing.scrollIntoViewIfNeeded();
+  await closing.getByRole('link', { name: 'Privacy', exact: true }).click();
+  await expect(page).toHaveURL(/\/privacy$/);
+  await expect(script).toHaveCount(1);
 });
