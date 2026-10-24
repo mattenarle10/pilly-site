@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "test:e2e": "playwright test",
+    "test:viewports": "playwright test --project=viewport-webkit",
     "verify": "bun run format:check && bun run lint && bun run typecheck && bun run build && bun run test:e2e",
     "preview": "serve out --listen tcp://127.0.0.1:4173 --no-clipboard"
   },

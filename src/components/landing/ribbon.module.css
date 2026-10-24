@@ -178,21 +178,19 @@
   }
 }
 
-@media (min-width: 901px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  :global(html[data-horizontal-journey]) .track {
-    display: block;
-    width: 100%;
-  }
+:global(html[data-horizontal-journey]) .track {
+  display: block;
+  width: 100%;
+}
 
-  :global(html[data-horizontal-journey]) .sequence:not(.clone) {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
+:global(html[data-horizontal-journey]) .sequence:not(.clone) {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
 
-  :global(html[data-horizontal-journey]) .slot {
-    width: 100%;
-    min-width: 0;
-  }
+:global(html[data-horizontal-journey]) .slot {
+  width: 100%;
+  min-width: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
