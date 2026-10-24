@@ -30,7 +30,8 @@ test('routine cards track intermediate scroll positions and reverse', async ({
 }, testInfo) => {
   await page.goto('/');
   const card = page.locator('[data-motion-group="routine"] [data-card-motion]').first();
-  const distance = testInfo.project.use.hasTouch ? 3 : 6;
+  const distance =
+    (await page.locator('[data-axis]').getAttribute('data-axis')) === 'horizontal' ? 6 : 3;
   await expect.poll(() => offset(card)).toBeCloseTo(distance, 0);
   await moveToRoutine(page, 0.5);
   await expect.poll(() => offset(card)).toBeLessThan(distance - 1);
@@ -170,7 +171,7 @@ test('resize and orientation preserve usable layouts and motion', async ({ page 
     await page.setViewportSize(viewport);
     await expect(page.locator('[data-axis]')).toHaveAttribute(
       'data-axis',
-      !touch && viewport.width > 900 ? 'horizontal' : 'vertical',
+      !touch && viewport.width > 900 && viewport.height >= 900 ? 'horizontal' : 'vertical',
     );
     await moveToRoutine(page, 1);
     await expect
@@ -210,10 +211,12 @@ test('routine cards keep their gaps throughout the stagger', async ({ page }) =>
 });
 
 for (const kind of ['routine', 'identity', 'closing']) {
-  test(`${kind} container follows scrolling and reverses`, async ({ page }, testInfo) => {
+  test(`${kind} container follows scrolling and reverses`, async ({ page }) => {
     await page.goto('/');
     const group = page.locator(`[data-motion-group="${kind}"]`);
-    const distance = (kind === 'routine' ? 20 : 16) / (testInfo.project.use.hasTouch ? 2 : 1);
+    const horizontal =
+      (await page.locator('[data-axis]').getAttribute('data-axis')) === 'horizontal';
+    const distance = (kind === 'routine' ? 20 : 16) / (horizontal ? 1 : 2);
     await expect.poll(() => offset(group)).toBeCloseTo(distance, 0);
     const move = async (progress: number) =>
       group.evaluate((element, value) => {

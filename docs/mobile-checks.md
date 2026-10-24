@@ -9,6 +9,56 @@ Historical iOS 16.4 compatibility remains unverified until that version is teste
 on a device or an appropriate device service. Do not label WebKit results as
 real-device Safari results.
 
+## Reference viewport regression checks
+
+The dedicated `viewport-webkit` project uses touch-enabled WebKit at the dimensions
+from the supplied viewport review gallery:
+
+| Layout            | CSS viewport sizes |
+| ----------------- | ------------------ |
+| Compact portrait  | 382x580, 382x618   |
+| Compact landscape | 594x368, 594x406   |
+| Wide portrait     | 669x867, 669x902   |
+| Wide landscape    | 951x585, 951x620   |
+| Split view        | 385x571, 385x609   |
+
+Run against a fresh static export:
+
+```sh
+bun run build
+bun run test:viewports
+bunx playwright show-report
+```
+
+The matrix contains 80 route checks: all four routes, ten viewport sizes, and both
+system color preferences. Pilly intentionally keeps its existing light theme.
+Eight additional checks cover resize state retention, legal-container scrolling,
+reduced motion, and delayed hydration. Screenshots are attached to the HTML report
+in ignored `playwright-report/`; original captures and failure traces are under
+ignored `test-results/`.
+
+Desktop horizontal travel requires at least 901x900 CSS pixels, hover, a fine
+pointer, and normal motion preferences. Shorter windows use vertical document
+flow. The desktop regression suite checks short windows, both breakpoint edges,
+section and selection retention, reduced-motion transitions, and route cleanup
+in Chromium, Firefox, and WebKit. `bun run verify` includes both suites.
+
+Startup coverage also holds application JavaScript while resizing across width
+and height breakpoints and changing reduced-motion preferences. It verifies
+ribbon and footer access before hydration, then checks section retention and
+listener cleanup during legal-page navigation after React takes ownership.
+
+Viewport resizing approximates toolbar-height and orientation changes; it does
+not emulate physical folding, browser chrome, the keyboard, hardware safe areas,
+or VoiceOver. Check those on a device using the checklist below.
+
+Viewport upgrade validation on 2026-10-24: `bun run verify` passed with Node
+24.19.0 and Bun 1.4.0: 420 tests passed and 81 capability-specific cases were
+skipped. All 80 reference route checks and eight additional WebKit checks passed,
+along with the desktop resize regressions in all three browser engines.
+Desktop, compact portrait/landscape, wide touch landscape, and split-view
+screenshots were reviewed. Physical-device checks remain unverified.
+
 ## Open the local export on your iPhone
 
 Keep the phone and Mac on the same trusted Wi-Fi network. From this repo:

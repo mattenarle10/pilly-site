@@ -6,26 +6,45 @@ const baseURL = externalBaseURL ?? 'http://127.0.0.1:4173';
 export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
-  reporter: 'line',
+  workers: process.env.CI ? undefined : 4,
+  reporter: [['line'], ['html', { open: 'never' }]],
   use: {
     baseURL,
     trace: 'retain-on-failure',
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
-    { name: 'desktop-firefox', use: { ...devices['Desktop Firefox'] } },
-    { name: 'desktop-webkit', use: { ...devices['Desktop Safari'] } },
-    { name: 'iphone', use: { ...devices['iPhone 13'] } },
-    { name: 'ipad', use: { ...devices['iPad Pro 11'] } },
-    { name: 'android', use: { ...devices['Pixel 7'] } },
+    {
+      name: 'desktop',
+      testIgnore: 'viewports.spec.ts',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 900 } },
+    },
+    {
+      name: 'desktop-firefox',
+      testIgnore: 'viewports.spec.ts',
+      use: { ...devices['Desktop Firefox'], viewport: { width: 1280, height: 900 } },
+    },
+    {
+      name: 'desktop-webkit',
+      testIgnore: 'viewports.spec.ts',
+      use: { ...devices['Desktop Safari'], viewport: { width: 1280, height: 900 } },
+    },
+    { name: 'iphone', testIgnore: 'viewports.spec.ts', use: { ...devices['iPhone 13'] } },
+    { name: 'ipad', testIgnore: 'viewports.spec.ts', use: { ...devices['iPad Pro 11'] } },
+    { name: 'android', testIgnore: 'viewports.spec.ts', use: { ...devices['Pixel 7'] } },
     {
       name: 'small-phone',
+      testIgnore: 'viewports.spec.ts',
       use: {
         viewport: { width: 320, height: 568 },
         deviceScaleFactor: 2,
         hasTouch: true,
         isMobile: true,
       },
+    },
+    {
+      name: 'viewport-webkit',
+      testMatch: 'viewports.spec.ts',
+      use: { ...devices['iPhone 13'] },
     },
   ],
   webServer: externalBaseURL

@@ -3,9 +3,21 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
 import { site } from '@/config';
-import { horizontalJourneyQuery } from '@/motion/journey-mode';
+import { horizontalJourneyQuery, journeyReadyEvent } from '@/motion/journey-mode';
 
 import './globals.css';
+
+const journeyStartupScript = `
+if (location.pathname === '/') {
+  const media = matchMedia(${JSON.stringify(horizontalJourneyQuery)});
+  const update = () => document.documentElement.toggleAttribute('data-horizontal-journey', media.matches);
+  update();
+  media.addEventListener('change', update);
+  window.addEventListener(${JSON.stringify(journeyReadyEvent)}, () => {
+    media.removeEventListener('change', update);
+  }, { once: true });
+}
+`;
 
 export const viewport: Viewport = { viewportFit: 'cover' };
 
@@ -33,12 +45,8 @@ export default function Layout({ children }: Readonly<{ children: ReactNode }>) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Select the landing layout before paint, while React is still loading. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `if(location.pathname === '/') document.documentElement.toggleAttribute('data-horizontal-journey',matchMedia(${JSON.stringify(horizontalJourneyQuery)}).matches);`,
-          }}
-        />
+        {/* Keep the layout responsive before paint and until React takes ownership. */}
+        <script dangerouslySetInnerHTML={{ __html: journeyStartupScript }} />
       </head>
       <body>
         {children}

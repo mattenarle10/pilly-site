@@ -4,7 +4,11 @@ import gsap from 'gsap';
 import { Children, useLayoutEffect, useId, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
-import { horizontalJourneyQuery } from '@/motion/journey-mode';
+import {
+  horizontalJourneyQuery,
+  horizontalJourneyViewport,
+  journeyReadyEvent,
+} from '@/motion/journey-mode';
 import { useCardMotion } from '@/motion/use-card-motion';
 
 import styles from './journey.module.css';
@@ -21,6 +25,7 @@ type Props = {
 
 export function Journey({ children, backgroundTokens = defaultBackgroundTokens }: Props) {
   const viewport = useRef<HTMLDivElement>(null);
+  const pendingScene = useRef<number | null>(null);
   const instructionsId = useId();
   const [mode, setMode] = useState<JourneyMode>('static');
   const isHorizontal = mode === 'horizontal';
@@ -28,13 +33,43 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
 
   useLayoutEffect(() => {
     const node = viewport.current;
+    if (!node || pendingScene.current === null) return;
+    // The motion hook schedules its refresh first; restore after it measures the new layout.
+    const frame = requestAnimationFrame(() => {
+      const scene =
+        node.querySelectorAll<HTMLElement>('[data-journey-scene]')[pendingScene.current!];
+      pendingScene.current = null;
+      if (mode === 'horizontal') {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        node.scrollTo({ left: scene.offsetLeft, behavior: 'instant' });
+      } else {
+        node.scrollLeft = 0;
+        window.scrollTo({
+          top: scene.getBoundingClientRect().top + window.scrollY,
+          behavior: 'instant',
+        });
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [mode]);
+
+  useLayoutEffect(() => {
+    const node = viewport.current;
     if (!node) return;
+
+    // The journey must own layout changes so it can capture the current section first.
+    window.dispatchEvent(new Event(journeyReadyEvent));
 
     const journeyHeader = node.querySelector<HTMLElement>('[data-journey-header]');
     const rootStyles = getComputedStyle(document.documentElement);
     const backgrounds = backgroundTokens.map((token) => rootStyles.getPropertyValue(token).trim());
     const horizontalMedia = window.matchMedia(horizontalJourneyQuery);
     const reducedMotionMedia = window.matchMedia(reducedMotionQuery);
+    const scenes = Array.from(node.querySelectorAll<HTMLElement>('[data-journey-scene]'));
+    let previousHorizontal: boolean | undefined;
+    let configuredMode: JourneyMode | undefined;
+    let progress = 0;
+    let horizontalWidth = node.clientWidth;
     let removeJourneyListeners = () => {};
 
     const paintBackground = (sceneProgress: number) => {
@@ -49,22 +84,37 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
     };
 
     const configureJourney = () => {
+      const nextMode = horizontalMedia.matches
+        ? 'horizontal'
+        : reducedMotionMedia.matches
+          ? 'static'
+          : 'vertical';
+      if (configuredMode === nextMode) return;
+      configuredMode = nextMode;
       removeJourneyListeners();
+      const horizontal = horizontalMedia.matches;
+      const changingAxis = previousHorizontal !== undefined && previousHorizontal !== horizontal;
+      // A narrower viewport can clamp scrollLeft before resize; retain its last measured progress.
+      if (previousHorizontal && node.clientWidth === horizontalWidth) {
+        progress = node.scrollLeft / horizontalWidth;
+      }
+      const activeScene = Math.min(scenes.length - 1, Math.round(progress));
+      previousHorizontal = horizontal;
       document.documentElement.toggleAttribute('data-horizontal-journey', horizontalMedia.matches);
       node.style.removeProperty('background-color');
       if (journeyHeader) gsap.set(journeyHeader, { clearProps: 'opacity,visibility' });
 
-      if (!horizontalMedia.matches) {
-        if (reducedMotionMedia.matches) {
-          setMode('static');
-          return;
-        }
+      if (changingAxis) {
+        pendingScene.current = activeScene;
+        progress = activeScene;
+      }
 
-        setMode('vertical');
-        const scenes = Array.from(node.querySelectorAll<HTMLElement>('[data-journey-scene]'));
+      if (!horizontalMedia.matches) {
+        setMode(reducedMotionMedia.matches ? 'static' : 'vertical');
         let frame = 0;
         const renderVerticalJourney = () => {
           frame = 0;
+          if (horizontalMedia.matches || pendingScene.current !== null) return;
           const viewportCenter = window.innerHeight / 2;
           const centers = scenes.map((scene) => {
             const rect = scene.getBoundingClientRect();
@@ -84,7 +134,8 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
               }
             }
           }
-          paintBackground(sceneProgress);
+          progress = sceneProgress;
+          if (!reducedMotionMedia.matches) paintBackground(sceneProgress);
         };
         const scheduleVerticalRender = () => {
           if (frame) return;
@@ -105,12 +156,20 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
 
       setMode('horizontal');
 
+      horizontalWidth = node.clientWidth;
       const maxScroll = () => Math.max(0, node.scrollWidth - node.clientWidth);
       const moveTo = (next: number, behavior: ScrollBehavior = 'auto') => {
         node.scrollTo({ left: Math.min(maxScroll(), Math.max(0, next)), behavior });
       };
       const renderJourney = () => {
+        if (
+          !horizontalMedia.matches ||
+          node.clientWidth !== horizontalWidth ||
+          pendingScene.current !== null
+        )
+          return;
         const sceneProgress = node.clientWidth ? node.scrollLeft / node.clientWidth : 0;
+        progress = sceneProgress;
         paintBackground(sceneProgress);
         if (journeyHeader) {
           gsap.set(journeyHeader, {
@@ -152,7 +211,15 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
         moveTo(destination, 'smooth');
       };
       const handleResize = () => {
-        moveTo(node.scrollLeft);
+        // Resize precedes media-query change events; read dimensions before changing scroll state.
+        if (
+          innerWidth < horizontalJourneyViewport.minWidth ||
+          innerHeight < horizontalJourneyViewport.minHeight
+        )
+          return;
+        if (node.clientWidth >= horizontalWidth) progress = node.scrollLeft / horizontalWidth;
+        horizontalWidth = node.clientWidth;
+        moveTo(progress * horizontalWidth);
         renderJourney();
       };
 
@@ -179,6 +246,7 @@ export function Journey({ children, backgroundTokens = defaultBackgroundTokens }
       horizontalMedia.removeEventListener('change', configureJourney);
       reducedMotionMedia.removeEventListener('change', configureJourney);
       removeJourneyListeners();
+      pendingScene.current = null;
     };
   }, [backgroundTokens]);
 
